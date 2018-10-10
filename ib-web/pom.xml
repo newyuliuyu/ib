@@ -48,6 +48,11 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>ib</groupId>
+            <artifactId>ib-commons</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
