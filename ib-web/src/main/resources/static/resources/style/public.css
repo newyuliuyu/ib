@@ -1,0 +1,315 @@
+html {
+    font-size: 16px;
+}
+
+body {
+    background: none;
+    font-size: 12px;
+}
+
+header {
+    background: none;
+    padding-bottom: 0px;
+    box-shadow: none;
+}
+
+.no-display {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .show-display {
+        display: block;
+    }
+}
+
+/*主菜单颜色*/
+.user-info {
+    margin-bottom: 0px;
+    cursor: pointer;
+}
+
+.user-info .user-image {
+    /*display: inline-block;*/
+    /*line-height: 20px;*/
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    background: #fff;
+    margin-right: 10px;
+    overflow: hidden;
+    display: inline-block;
+    line-height: 34px;
+    vertical-align: middle;
+    text-align: center;
+
+}
+
+.user-info .user-image img {
+    width: 100%;
+    height: 100%;
+}
+
+.user-info .user-name {
+    display: inline-block;
+    line-height: 34px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.main-menu-warp {
+
+}
+
+.main-menu-warp .main-menu {
+    padding: 0px 12px;
+    font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+    font-size: 1.2rem;
+    color: #343a40 !important;
+    cursor: pointer;
+}
+
+.main-menu-warp .text-no-line {
+    text-decoration: none;
+}
+
+/*********************************************************/
+.ease_header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    height: 80px;
+}
+
+.ease_header {
+    background: url(../images/ez/bg/icon_menubg.png) left top repeat-x #45a5ff;
+    color: #fff;
+}
+
+.pdlr20 {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.easy_logoImg {
+    float: left;
+    padding: 24px 0;
+    margin: 0 20px 0 -20px;
+}
+
+.easy_nav {
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+.easy_nav li {
+    float: left;
+}
+
+.easy_nav li a {
+    display: block;
+    background: transparent;
+    line-height: 40px;
+    padding: 0 15px;
+    border-radius: 20px;
+    margin: 0 5px;
+    color: #337ab7;
+    text-decoration: none;
+    font-size:12px;
+    font-weight: bold;
+@include transition(background);
+@include transition(background);
+}
+
+a:hover, a.current {
+    background: #69b4ff;
+}
+
+.easy_nav li span {
+    font-size: 18px;
+    color: #fff;
+    display: block;
+    *display: inline;
+    *zoom: 1;
+}
+
+/***********************************************************************/
+.wrapper {
+    margin-top: 82px;
+}
+.tabContent {
+    border: 1px solid #ccc;
+    border-top: none;
+    background-color: #fff;
+    padding: 20px 30px;
+}
+
+.tabContent2 {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    padding: 20px 30px;
+}
+
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+hr{
+    margin-top: 1.3rem;
+}
+/***********************************向导*************************/
+ul.guide {
+    border: none;
+}
+
+ul.guide > li {
+    display: inline-block;
+    list-style: none;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    margin: 0 0 2px 0;
+    cursor: pointer;
+}
+
+ul.guide > li.line {
+    width: 150px;
+}
+
+ul.guide > li > span {
+    transition: all 1s;
+    border: 1px solid #000;
+    border-radius: 100%;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    display: inline-block;
+    font-size: 1.3rem
+}
+
+ul.guide > li.selected > span {
+    border: 1px solid #03A9F4;
+    color: #03A9F4;
+}
+
+ul.guide > li.selected > label {
+    color: #03A9F4;
+}
+
+ul.guide > li > hr {
+    border: 1px dotted #03A9F4;
+    margin-bottom: 5px;
+}
+
+.guideContent {
+    height: 800px;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.guidePage {
+    position: relative;
+    float: left;
+    display: inline-block;
+
+    height: 100%;
+
+    /*
+    width: 100%;
+    border: 1px solid rebeccapurple;
+    */
+
+}
+.fr{
+    float: right;
+}
+.guidePage .body {
+    width: 100%;
+    height: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.guidePage .toolBar {
+    width: 100%;
+    height: 50px;
+
+    bottom: 0px;
+    position: absolute;
+    padding: 0px 30px;
+    /*
+    border: 1px solid rebeccapurple;
+    */
+}
+
+/***************上传按钮********************/
+.uploadBtn {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    color: #fff;
+    border-color: #4cae4c;
+}
+
+.uploadBtn input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    -ms-filter: 'alpha(opacity=0)';
+    font-size: 200px !important;
+    direction: ltr;
+    cursor: pointer;
+}
+
+
+/*****************进度********************/
+.removeFile {
+    cursor: pointer;
+    vertical-align: middle;
+    color: red;
+    line-height: 30px;
+    font-size: 20px;
+    padding: 5px;
+}
+.progress {
+    height: 22px;
+    width: 556px;
+    border: 1px solid #3de498;
+    border-radius: 20px;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    background: #f6f6f6;
+    overflow: hidden;
+}
+.progress2 {
+    border: 1px solid #8BC34A;
+    border-radius: 0px;
+    vertical-align: middle;
+    margin: 0px;
+}
+
+.progress-bar2 {
+    min-width: 2em;
+    background-color: #8BC34A;
+    width: 0%;
+    height: 100%;
+}
+.textTitle {
+    margin-right: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+    font-size: 20px;
+    line-height: 30px;
+    display: inline-block;
+    width: 20%;
+    text-align: right;
+}
