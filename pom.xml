@@ -6,9 +6,11 @@
 
     <groupId>ib</groupId>
     <artifactId>ib-parent</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>ib-web</module>
+        <module>ib-commons</module>
     </modules>
     <dependencies>
         <!-- 单元测试 -->
