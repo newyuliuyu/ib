@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ez.ib.web.dao.SubjectDao">
+    <select id="queryAllSubjects" resultType="com.ez.ib.web.bean.Subject">
+		select id, name
+		from ib_subject
+	</select>
+
+
+</mapper>

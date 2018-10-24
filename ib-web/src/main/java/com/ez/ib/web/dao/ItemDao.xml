@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ez.ib.web.dao.ItemDao">
+
+    <insert id="saveItems">
+        INSERT INTO ib_item(id,stem,analysisId,answerId,commentId,subjectId,learnSegmentId)
+        VALUES
+        <foreach collection="items" item="item" index="index" separator=",">
+            (#{item.id},#{item.itemStem.id},#{item.analysis.id},#{item.answer.id},#{item.comment.id},#{item.subject.id},#{item.learnSegment.id})
+        </foreach>
+    </insert>
+
+    <insert id="saveItemStems">
+        INSERT INTO ib_item_stem(id,content)
+        VALUES
+        <foreach collection="items" item="item" index="index" separator=",">
+            (#{item.itemStem.id},#{item.itemStem.content})
+        </foreach>
+    </insert>
+
+    <insert id="saveItemAnalysis">
+        INSERT INTO ib_item_analysis(id,content)
+        VALUES
+        <foreach collection="items" item="item" index="index" separator=",">
+            (#{item.analysis.id},#{item.analysis.content})
+        </foreach>
+    </insert>
+
+    <insert id="saveItemAnswers">
+        INSERT INTO ib_item_answer(id,content)
+        VALUES
+        <foreach collection="items" item="item" index="index" separator=",">
+            (#{item.answer.id},#{item.answer.content})
+        </foreach>
+    </insert>
+
+    <insert id="saveItemComments">
+        INSERT INTO ib_item_comment(id,content)
+        VALUES
+        <foreach collection="items" item="item" index="index" separator=",">
+            (#{item.comment.id},#{item.comment.content})
+        </foreach>
+    </insert>
+
+
+</mapper>

@@ -1,0 +1,40 @@
+.item-list {
+    border: 1px solid #69d8c9;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.item-list .item-top {
+    height: 36px;
+    padding: 5px;
+}
+
+.item-list .item-body {
+    padding: 10px;
+}
+
+.item-list .item-footer {
+    line-height: 45px;
+    border-top: 1px solid #ededed;
+    border-bottom: 1px solid #ededed;
+    background: #f8f8f8;
+}
+
+.item-list .item-detail {
+    border-top: 1px solid #69d8c9;
+}
+
+.item-list .item-detail .analysis-item {
+    border-bottom: 1px dashed #b9b7b9;
+    padding: 10px;
+}
+
+.item-list .item-detail .answer-item {
+    border-bottom: 1px dashed #b9b7b9;
+    padding: 10px;
+}
+
+.item-list .item-detail .review-item {
+    border-bottom: 1px dashed #b9b7b9;
+    padding: 10px;
+}

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>发送成绩通知</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" sizes="32x32" href="../resources/images/favicon.png">
+    <style type="text/css">
+        div.ez-selected {
+            border-style: solid;
+        }
+
+        .ez-item {
+            border: 1px dashed #2196F3;
+            display: inline-block;
+            padding: 10px;
+            margin: 10px 0px;
+        }
+
+        .ez-analysis-item {
+            border: 1px dashed #9c27b0;
+            display: inline-block;
+            padding: 10px;
+            margin: 10px 0px;
+        }
+
+        .ez-answer-item {
+            border: 1px dashed #4caf50;
+            display: inline-block;
+            padding: 10px;
+            margin: 10px 0px;
+        }
+
+        .ez-review-item {
+            /*border: 1px solid #3f51b5;;*/
+            border: 1px dashed #3f51b5;
+            display: inline-block;
+            padding: 10px;
+            margin: 10px 0px;
+        }
+
+        .view-item {
+            border: 1px solid #69d8c9;
+            margin-bottom: 10px;
+        }
+
+        .ez-vi-item {
+            padding: 10px;
+        }
+
+        .ez-vi-detail {
+            border-top: 1px solid #69d8c9;
+        }
+
+        .ez-vi-analysis-item {
+            border-bottom: 1px dashed #b9b7b9;
+            padding: 10px;
+        }
+
+        .ez-vi-answer-item {
+            border-bottom: 1px dashed #b9b7b9;
+            padding: 10px;
+        }
+
+        .ez-vi-review-item {
+            border-bottom: 1px dashed #b9b7b9;
+            padding: 10px;
+        }
+    </style>
+</head>
+<script type="text/javascript">
+    var pathName = document.location.pathname;
+    var index = pathName.substr(1).indexOf("/");
+    var myContextPath = pathName.substr(0, index + 1);
+    window["app"] = {rootPath: myContextPath + '/', entry: 'draw.item'};
+
+    var script = document.createElement("script");
+    script.setAttribute("type", "text/javascript");
+    script.setAttribute("data-main", app.rootPath + "resources/js/app");
+    script.setAttribute("src", app.rootPath + "resources/js/lib/require.js");
+    var heads = document.getElementsByTagName("head");
+    document.documentElement.appendChild(script);
+</script>
+<body style="display: none;">
+<div class="ease_header pdlr20">
+    <div class="container clearfix">
+        <!-- <a href="#" class="fl easy_logo"></a> -->
+        <a class="easy_logoImg"><img
+                src="../resources/images/ez/logo.png" alt="logo"></a>
+        <ul class="easy_nav fl">
+            <li><a class="" href="javascript:;"><span>【题库入库】</span></a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class="tabStyle2" name="tab">
+
+        <div class="container">
+            <!--<div class="breadcrumb breadStyle1 navigationBar">-->
+            <!--<div class="btn-group btn-group-lg" role="group">-->
+            <!--<button type="button" class="btn btn-secondary">Left</button>-->
+            <!--<button type="button" class="btn btn-secondary">Right</button>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="tabContent2" name="tabCon">-->
+
+            <!--</div>-->
+            <div id="mm" class="tabTit" name="tabTit"
+                 style="height: 50px;border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
+                <button id="uploadDocxPaper" type="button" class="btn float-right btn-primary">导入Docx文档格式试卷</button>
+            </div>
+
+            <div class="tabContent" name="tabCon">
+                <!--<div class="tabContent_header"></div>-->
+                <div id="kk"
+                     style="border: 1px solid;width: 200px;height: 300px;float: right;position: fixed;right: 300px;">
+                    <!--<button type="button" class="btn btn-outline-primary">Primary</button>-->
+                    <label><input tabindex="1" type="radio" name="itemtype" class="attribute" value="1">题目</label>
+                    <label><input tabindex="1" type="radio" name="itemtype" class="attribute" value="2">分析</label>
+                    <label><input tabindex="1" type="radio" name="itemtype" class="attribute" value="3">解答</label>
+                    <label><input tabindex="1" type="radio" name="itemtype" class="attribute" value="4">点评</label>
+                    <hr/>
+                    <button id="delSelected" type="button" class="btn btn-outline-secondary">删除选中</button>
+                    <button id="previewItem" type="button" class="btn btn-outline-success">预览</button>
+                    <button id="checkItemIntegrity" type="button" class="btn btn-outline-success">检查题目完整性</button>
+                    <button id="highlightShowItem" type="button" class="btn btn-outline-success">高亮显示题目</button>
+                    <button id="tmpSave" type="button" class="btn btn-outline-success">临时保存</button>
+                    <button id="save" type="button" class="btn btn-outline-success">保存</button>
+                </div>
+
+
+                <div class="tabContent_body">
+
+
+                    <!--<p id="a">第一条数据</p>-->
+                    <!--<p>第二条数据</p>-->
+                    <!--<p>第三条数据</p>-->
+                    <!--<p>第四条数据</p>-->
+                    <!--<p>第五条数据</p>-->
+
+                    <!--<p><span style="font-size:12.0pt;font-weight:bold;white-space:pre-wrap;">一</span><span-->
+                    <!--style="font-size:12.0pt;font-weight:bold;white-space:pre-wrap;">．选择题（共26小题）</span></p>-->
+                    <!--<p><span style="font-size:12.0pt;white-space:pre-wrap;">1．已知a=（1，sin</span><span-->
+                    <!--style="font-family:'Calibri';font-size:12.0pt;vertical-align:super;">2</span><span-->
+                    <!--style="font-family:'宋体';font-size:12.0pt;white-space:pre-wrap;">x），b=（2，sin2x），其中x∈（0，π）．若|</span><span-->
+                    <!--style="font-size:12.0pt;white-space:pre-wrap;">a•b</span><span-->
+                    <!--style="font-size:12.0pt;white-space:pre-wrap;">|=|a|•|b|，则</span><span-->
+                    <!--style="font-size:12.0pt;white-space:pre-wrap;">tanx</span><span-->
+                    <!--style="font-size:12.0pt;white-space:pre-wrap;">的值等于（　　）</span></p>-->
+                    <!--<p><span style="font-size:12.0pt;white-space:pre-wrap;">A．1    B．﹣1    C．</span><img-->
+                    <!--src="/home/liuyu/tmp/word2html/word/media/image1.png"-->
+                    <!--style="width:15.0pt;height:13.5pt;"><span style="font-size:12.0pt;white-space:pre-wrap;">    D．</span><img-->
+                    <!--src="/home/liuyu/tmp/word2html/word/media/image2.png" style="width:17.25pt;height:27.75pt;">-->
+                    <!--</p>-->
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+</html>
+<script id="docxPaperT" type="text/x-dot-template">
+    <div id="{{=it.file.id}}" class="studentFile" style="padding: 5px 5px;">
+	<span title="{{=it.file.name}}" class="textTitle">
+		{{=it.file.name}}
+	</span>
+
+        <div class="progress progress2">
+            <div class="progress-bar progress-bar2 bar-unOver">
+                0%
+            </div>
+        </div>
+        <span class="removeFile  icon-remove"></span>
+    </div>
+</script>
+<script id="uploadDialogT" type="text/x-dot-template">
+    <div>
+        <div class="col-md-12">
+        <span id="importDocxPaper" class="uploadBtn btn btn-primary btn-lg">
+            <label class="icon-cloud-upload">上传试卷</label>
+        </span>
+        </div>
+        <div id="docxPapers" class="col-md-12" style="margin-top: 30px;"></div>
+    </div>
+</script>
+<script id="viewItemT" type="text/x-dot-template">
+    {{~it.items:item:index}}
+    <div class="view-item">
+        <div class="ez-vi-item">{{=item.item}}</div>
+        <div class="ez-vi-detail">
+            <div class="ez-vi-analysis-item">{{=item.analysis||'无'}}</div>
+            <div class="ez-vi-answer-item">{{=item.answer||'无'}}</div>
+            <div class="ez-vi-review-item">{{=item.review||'无'}}</div>
+        </div>
+    </div>
+    {{~}}
+</script>
+<script id="formT" type="text/x-dot-template">
+    <div class="form-group row">
+        <label class="col-sm-2 text-right" style="font-size: 14px;">试卷名称:</label>
+        <div class="col-sm-10">
+            <input id="paperName" type="text" class="form-control">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 text-right" style="font-size: 14px;">科目:</label>
+        <div class="col-sm-10">
+            <select id="subject" class="form-control" style="width: 200px;">
+                {{~it.subjects:item:index}}
+                <option value="{{=item.id}}">{{=item.name}}</option>
+                {{~}}
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 text-right" style="font-size: 14px;">学段:</label>
+        <div class="col-sm-10">
+            <select id="learnSegment" class="form-control" style="width: 200px;">
+                {{~it.learnSegments:item:index}}
+                <option value="{{=item.id}}">{{=item.name}}</option>
+                {{~}}
+            </select>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ez.ib.web.dao.TestPaperDao">
+
+    <insert id="newTestPaper">
+		insert into ib_test_paper(id,name,subject,learnSegment)
+		values(#{testPaper.id},#{testPaper.name},#{testPaper.subject.id},#{testPaper.learnSegment.id})
+	</insert>
+
+    <insert id="saveTestPaperItem">
+        insert into ib_test_paper_item(testPaperId,itemId)
+        values
+        <foreach collection="testPaperItem.items" item="item" index="index" separator=",">
+            (#{testPaperItem.testPaper.id},#{item.id})
+        </foreach>
+    </insert>
+
+    <update id="updateTestPaperKnowledgeSystem">
+        update ib_test_paper a
+        set a.knowledgeSys=#{knowledgeSystemId}
+        where a.id=${testPaperId}
+    </update>
+
+    <resultMap id="myTestPaper" type="com.ez.ib.web.bean.TestPaper">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <association property="subject" javaType="com.ez.ib.web.bean.Subject">
+            <id property="id" column="subjectId"/>
+            <result property="name" column="subjectName"/>
+        </association>
+        <association property="learnSegment" javaType="com.ez.ib.web.bean.LearnSegment">
+            <id property="id" column="learnSegmentId"/>
+            <result property="name" column="learnSegmentName"/>
+        </association>
+        <association property="knowledgeSystem" javaType="com.ez.ib.web.bean.KnowledgeSystem">
+            <id property="id" column="knowledgeSysId"/>
+            <result property="name" column="knowledgeSysName"/>
+        </association>
+    </resultMap>
+
+    <select id="queryTestPapers" resultMap="myTestPaper">
+        SELECT
+        a.id,
+        a.name,
+        b.id AS subjectId,
+        b.name AS subjectName,
+        c.id AS learnSegmentId,
+        c.name AS learnSegmentName,
+        d.id as knowledgeSysId,
+        d.name as knowledgeSysName
+        FROM ib_test_paper a
+        INNER JOIN ib_subject b ON a.subject=b.id
+        INNER JOIN ib_learn_segment c ON a.learnSegment=c.id
+        LEFT JOIN ib_knowledge_system d on a.knowledgeSys=d.id
+        <where>
+            <if test="subjectId>0">
+                b.id=#{subjectId}
+            </if>
+            <if test="learnSegmentId>0">
+                AND c.id=#{learnSegmentId}
+            </if>
+            <if test="name != null">
+                AND a.name like #{name}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

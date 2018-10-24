@@ -494,10 +494,18 @@ public abstract class XWPFDocumentVisitor<T, O extends Options, E extends IXWPFM
             c2.put(a.getName(), a.getValue());
         });
 
-        String va1 = c1.get("vertical-align");
-        String va2 = c2.get("vertical-align");
-        if (StringUtils.isNotEmpty(va1) || StringUtils.isNotEmpty(va2)) {
-            if (StringUtils.isNotEmpty(va1) && StringUtils.isNotEmpty(va2) && va1.equalsIgnoreCase(va2)) {
+        String s1 = c1.get("vertical-align");
+        String s2 = c2.get("vertical-align");
+        if (StringUtils.isNotEmpty(s1) || StringUtils.isNotEmpty(s2)) {
+            if (StringUtils.isNotEmpty(s1) && StringUtils.isNotEmpty(s2) && s1.equalsIgnoreCase(s2)) {
+                return true;
+            }
+            return false;
+        }
+        s1 = c1.get("text-decoration");
+        s2 = c2.get("text-decoration");
+        if (StringUtils.isNotEmpty(s1) || StringUtils.isNotEmpty(s2)) {
+            if (StringUtils.isNotEmpty(s1) && StringUtils.isNotEmpty(s2) && s1.equalsIgnoreCase(s2)) {
                 return true;
             }
             return false;
@@ -543,6 +551,12 @@ public abstract class XWPFDocumentVisitor<T, O extends Options, E extends IXWPFM
                     // Escape with HTML characters
 //                    sb.append(StringEscapeUtils.escapeHtml(value));
                     sb.append(value);
+                }
+            } else if (o instanceof CTEmpty) {
+                String tagName = o.getDomNode().getNodeName();
+                if ("w:tab".equals(tagName)) {
+                    sb.append("    ");
+//                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
                 }
             }
         }

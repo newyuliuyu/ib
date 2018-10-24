@@ -1,6 +1,6 @@
 (function () {
     "use strict";
-    var deps = ['jquery', 'commons/JQuery.errorDialog'];
+    var deps = ['jquery', 'js/commons/JQuery.errorDialog'];
     define(deps, function ($) {
 
         function getHeightAndWidth($target) {
@@ -41,7 +41,7 @@
                 id: 'loadingDIV',
                 css: {
                     'display': 'none',
-                    'z-index': '1000',
+                    'z-index': '10000000',
                     'position': 'absolute',
                     'top': '0px',
                     'width': widthAndHeight.width + "px",
@@ -52,8 +52,8 @@
             var $backgroudDIV = $('<div>', {
                 css: {
                     'filter': 'alpha(Opacity=60)',
-                    '-moz-opacity': '0.3',
-                    'opacity': '0.3',
+                    '-moz-opacity': '0.6',
+                    'opacity': '0.6',
                     'background-color': '#cccccc',
                     'z-index': '1001',
                     'position': 'relative',

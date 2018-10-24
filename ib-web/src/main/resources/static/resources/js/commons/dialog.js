@@ -14,10 +14,19 @@
                 $dialogBox.css('z-index', ++window.zindex);
 
                 var $dialog = $dialogBox.find('.dialog');
-                $dialog.addClass('dialog-' + settings.size);
+                if ($.isPlainObject(settings.size)) {
+                    $dialog.css('width', settings.size.w + "px");
+                    $dialog.find('.dialog-body').css({'max-height': settings.size.h + "px", "overflow-x": "auto"})
+                } else {
+                    $dialog.addClass('dialog-' + settings.size);
+                    var h = window.getClientHeight() - 200;
+                    $dialog.find('.dialog-body').css({'max-height': h + "px", "overflow": "auto"})
+                }
+
+
                 $dialog.find('.dialog-body').html(settings.body);
                 if (settings.header.show === true) {
-                    var $header = $('<div class="dialog-header">\
+                    var $header = $('<div class="dialog-header" style="height: 50px;">\
 							        <button type="button" class="close" style="font-size: 30px;">&times;</button>\
 							        <h4 class="dialog-title">' + settings.header.text
                         + '</h4>\
@@ -26,7 +35,7 @@
                 }
 
                 if (settings.footer.show === true) {
-                    var $footer = $('<div class="dialog-footer"></div>');
+                    var $footer = $('<div class="dialog-footer" style="height: 50px;padding: 5px;"></div>');
                     for (var i = 0; i < settings.footer.buttons.length; i++) {
                         var $btn = $('<button class="btn"></button>');
                         $btn.attr('type', settings.footer.buttons[i].type).addClass(settings.footer.buttons[i].clazz).html(settings.footer.buttons[i].text);
@@ -457,7 +466,40 @@
                     $modalBox.show();
                     return $modalBox;
                 },
+                modalFull: function (opts) {
+                    var w = window.getClientWidth() - 400;
+                    var h = window.getClientHeight() - 200;
+                    var defaultSettings = {
+                        size: {w: w, h: h},
+                        target: $(document.body),
+                        moveable: true,
+                        backdrop: true,
+                        header: {
+                            show: true,
+                            text: "提示"
+                        },
+                        footer: {
+                            show: true,
+                            buttons: [{
+                                type: 'button',
+                                text: "取消",
+                                clazz: 'btn-default',
+                                callback: function () {
+                                    $(this).trigger('close');
+                                }
+                            }]
+                        },
+                        body: ''
 
+                    };
+                    var settings = {};
+                    $.extend(true, settings, defaultSettings, opts);
+
+                    var $modalBox = createDialog(settings, true);
+
+                    $modalBox.show();
+                    return $modalBox;
+                },
                 nonmodal: function (opts) {
                     var defaultSettings = {
                         size: 'lg',

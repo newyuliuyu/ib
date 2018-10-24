@@ -23,6 +23,7 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * ClassName: SpringMVCConfig <br/>
@@ -170,6 +171,17 @@ public class SpringMVCConfig extends WebMvcConfigurationSupport {
     @Bean
     public SpringMVCExceptionResolver exceptionResolver() {
         SpringMVCExceptionResolver exceptionResolver = new SpringMVCExceptionResolver();
+        exceptionResolver.setDefaultErrorView("/404");
+        Properties mappings = new Properties();
+        mappings.setProperty("java.lang.Exception", "/500");
+        exceptionResolver.setExceptionMappings(mappings);
+        Properties statusCodes = new Properties();
+        statusCodes.setProperty("/500", "500");
+        statusCodes.setProperty("/401", "401");
+        statusCodes.setProperty("/403", "403");
+        statusCodes.setProperty("/404", "404");
+        statusCodes.setProperty("/405", "405");
+        exceptionResolver.setStatusCodes(statusCodes);
         return exceptionResolver;
     }
 

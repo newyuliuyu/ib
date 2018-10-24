@@ -84,7 +84,11 @@ var config = {
         'ezconfig': 'js/config/ezconfig',
         'ajax': 'js/commons/ajax',
         'dialog': 'js/commons/dialog',
-        'ckeditor': 'js/lib/ckeditor/ckeditor'
+        'ckeditor': 'js/lib/ckeditor/ckeditor',
+        'loading': 'js/commons/JQuery.loading',
+        'icheck': 'js/lib/icheck.min',
+        'pager': 'js/lib/jquery.pager'
+
     },
     map: {
         '*': {
@@ -101,6 +105,12 @@ var config = {
         },
         'ckeditor': {
             deps: ['jquery']
+        },
+        'icheck': {
+            deps: ['jquery', 'css!style/icheck-blue']
+        },
+        'pager': {
+            deps: ['jquery','css!style/page']
         }
     }
 };

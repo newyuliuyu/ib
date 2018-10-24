@@ -1,5 +1,7 @@
 package com.ez.ib.web.config;
 
+import com.github.pagehelper.PageInterceptor;
+import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +11,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 /**
  * ClassName: MybatisConfig <br/>
@@ -36,6 +39,19 @@ public class MybatisConfig {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(ds);
         bean.setMapperLocations(resources);
+
+
+//        TypeHandler[] typeHandlers = new TypeHandler[]{
+//                new LiuyuEnumIntTypeHandler<UserType>(UserType.class){}
+//        };
+//        bean.setTypeHandlers(typeHandlers);
+
+        PageInterceptor pageInterceptor = new PageInterceptor();
+        Properties properties = new Properties();
+        properties.put("param1","value1");
+        pageInterceptor.setProperties(properties);
+        bean.setPlugins(new Interceptor[]{pageInterceptor});
+
         return bean;
     }
 }

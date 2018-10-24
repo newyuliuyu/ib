@@ -135,7 +135,7 @@ public class WordToMathParse {
     }
 
     private String OOMLToMathML() throws Exception {
-        URI uri = Resources.getResource("omml2mml.xsl").toURI();
+        URI uri = Resources.getResource("oomlandmathml/omml2mml.xsl").toURI();
         File file = new File(uri);
         StreamSource stylesource = new StreamSource(file);
         Transformer transformer = TransformerFactory.newInstance().newTransformer(stylesource);

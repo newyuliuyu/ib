@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>发送成绩通知</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" sizes="32x32" href="../resources/images/favicon.png">
+    <style type="text/css">
+
+    </style>
+</head>
+<script type="text/javascript">
+    var pathName = document.location.pathname;
+    var index = pathName.substr(1).indexOf("/");
+    var myContextPath = pathName.substr(0, index + 1);
+    window["app"] = {rootPath: myContextPath + '/', entry: 'testpaper'};
+
+    var script = document.createElement("script");
+    script.setAttribute("type", "text/javascript");
+    script.setAttribute("data-main", app.rootPath + "resources/js/app");
+    script.setAttribute("src", app.rootPath + "resources/js/lib/require.js");
+    var heads = document.getElementsByTagName("head");
+    document.documentElement.appendChild(script);
+</script>
+<body style="display: none;">
+<div class="ease_header pdlr20">
+    <div class="container clearfix">
+        <!-- <a href="#" class="fl easy_logo"></a> -->
+        <a class="easy_logoImg"><img
+                src="../resources/images/ez/logo.png" alt="logo"></a>
+        <ul class="easy_nav fl">
+            <li><a class="" href="javascript:;"><span>【题库入库】</span></a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class="tabStyle2" name="tab">
+
+        <div class="container">
+
+            <div class="tabTit" name="tabTit"
+                 style="height: 50px;border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <select id="learnSegment" class="form-control">
+                            <option>选择学段</option>
+
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <select id="subject" class="form-control">
+                            <option>选择科目</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group col-sm-5">
+                        <input type="text" id="name" class="form-control" placeholder="输入搜索的考试名称"
+                               aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button id="searchName" class="btn btn-outline-secondary" type="button">搜索</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabContent" name="tabCon">
+                <div class="tabContent_header"></div>
+
+                <div class="tabContent_body">
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+</html>
+
+<script id="knowledgeSystemT" type="text/x-dot-template">
+    <table class="table table-striped">
+        {{~it.knowledgeSystems:item:index}}
+        <tr>
+            <td>{{=item.name}}</td>
+            <td><input type="radio" name="ksid" class="ksid attribute" {{? item.id==it.curKsId }}checked{{?}}
+                       text="{{=item.name}}" value="{{=item.id}}"></td>
+        </tr>
+        {{~}}
+    </table>
+</script>
