@@ -5,6 +5,14 @@
 		select id, name
 		from ib_learn_segment
 	</select>
+    <select id="queryLearnSegmentWithIds" resultType="com.ez.ib.web.bean.LearnSegment">
+		select id, name
+		from ib_learn_segment
+		where id in
+		<foreach collection="ids" item="item" index="index" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</select>
 
 
 </mapper>

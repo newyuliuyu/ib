@@ -1,6 +1,7 @@
 package com.ez.ib.web.dao;
 
 import com.ez.ib.web.bean.Subject;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,5 +20,7 @@ import java.util.List;
 public interface SubjectDao {
 
     List<Subject> queryAllSubjects();
+
+    List<Subject> querySubjectWitdhIds(@Param("ids") List<Integer> ids);
 
 }

@@ -87,7 +87,8 @@ var config = {
         'ckeditor': 'js/lib/ckeditor/ckeditor',
         'loading': 'js/commons/JQuery.loading',
         'icheck': 'js/lib/icheck.min',
-        'pager': 'js/lib/jquery.pager'
+        'pager': 'js/lib/jquery.pager',
+        'ztree': 'js/lib/jquery.ztree.all'
 
     },
     map: {
@@ -111,6 +112,9 @@ var config = {
         },
         'pager': {
             deps: ['jquery','css!style/page']
+        },
+        'ztree': {
+            deps: ['jquery','css!style/zTreeStyle']
         }
     }
 };

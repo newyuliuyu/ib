@@ -5,6 +5,14 @@
 		select id, name
 		from ib_subject
 	</select>
+    <select id="querySubjectWitdhIds" resultType="com.ez.ib.web.bean.Subject">
+		select id, name
+		from ib_subject
+		where id in
+		<foreach collection="ids" item="item" index="index" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</select>
 
 
 </mapper>

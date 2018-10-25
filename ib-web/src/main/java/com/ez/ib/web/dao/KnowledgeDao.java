@@ -1,6 +1,8 @@
 package com.ez.ib.web.dao;
 
+import com.ez.ib.web.bean.Knowledge;
 import com.ez.ib.web.bean.KnowledgeSystem;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,4 +20,11 @@ import java.util.List;
 @Repository
 public interface KnowledgeDao {
     List<KnowledgeSystem> queryKnowledgeSystem();
+
+    List<Knowledge> queryKnowledge(@Param("knowledgeSystemId") long knowledgeSystemId,
+                                   @Param("subjectId") int subjectId,
+                                   @Param("learnSegmentId") long learnSegmentId);
+
+    List<Knowledge> queryKnowledges(@Param("ids") List<Long> ids);
+    Knowledge getKnowledge(@Param("id") long id);
 }

@@ -42,5 +42,184 @@
         </foreach>
     </insert>
 
+    <delete id="deleteItemKnowledge">
+        delete from ib_item_x_knoledge where itemId=#{itemKnowledge.itemId}
+    </delete>
+
+    <insert id="saveItemKnowLedge">
+        INSERT INTO ib_item_x_knoledge(itemId,knowledgeId)
+        VALUES
+        <foreach collection="itemKnowledge.knowledges" item="item" index="index" separator=",">
+            (#{itemKnowledge.id},#{item.content})
+        </foreach>
+    </insert>
+
+
+    <resultMap id="myItem" type="com.ez.ib.web.bean.Item">
+        <id property="id" column="id"/>
+        <association property="itemStem" javaType="com.ez.ib.web.bean.ItemStem">
+            <id property="id" column="itemStemId"/>
+            <result property="content" column="stemContent"/>
+        </association>
+        <association property="analysis" javaType="com.ez.ib.web.bean.ItemAnalysis">
+            <id property="id" column="analysisId"/>
+            <result property="content" column="analysisContent"/>
+        </association>
+        <association property="answer" javaType="com.ez.ib.web.bean.ItemAnswer">
+            <id property="id" column="answerId"/>
+            <result property="content" column="answerContent"/>
+        </association>
+        <association property="comment" javaType="com.ez.ib.web.bean.ItemComment">
+            <id property="id" column="commentId"/>
+            <result property="content" column="commentContent"/>
+        </association>
+        <association property="subject" javaType="com.ez.ib.web.bean.Subject">
+            <id property="id" column="subjectId"/>
+            <result property="name" column="subjectName"/>
+        </association>
+        <association property="learnSegment" javaType="com.ez.ib.web.bean.LearnSegment">
+            <id property="id" column="learnSegmentId"/>
+            <result property="name" column="learnSegmentName"/>
+        </association>
+    </resultMap>
+
+    <select id="queryItemWithTestPaper" resultMap="myItem">
+        SELECT
+        a.id,
+        a.stem as itemStemId,
+        a.analysisId as analysisId,
+        a.answerId as answerId,
+        a.commentId as commentId,
+        a.subjectId as subjectId,
+        a.learnSegmentId as learnSegmentId
+        FROM ib_item a
+        INNER JOIN ib_test_paper_item b ON a.id=b.itemId
+        WHERE b.testPaperId=#{testPaperId}
+    </select>
+
+    <select id="getItem" resultMap="myItem">
+        SELECT
+        a.id,
+        a.stem as itemStemId,
+        a.analysisId as analysisId,
+        a.answerId as answerId,
+        a.commentId as commentId,
+        a.subjectId as subjectId,
+        a.learnSegmentId as learnSegmentId
+        FROM ib_item a
+        WHERE a.id=#{id}
+    </select>
+
+    <select id="queryItemStems" resultType="com.ez.ib.web.bean.ItemStem">
+        SELECT
+        a.id,
+        a.content
+        FROM ib_item_stem a
+        WHERE a.id in
+        <foreach collection="ids" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="getItemStem" resultType="com.ez.ib.web.bean.ItemStem">
+    SELECT
+    a.id,
+    a.content
+    FROM ib_item_stem a
+    WHERE a.id=#{id}
+    </select>
+
+    <select id="queryItemAnalysises" resultType="com.ez.ib.web.bean.ItemAnalysis">
+        SELECT
+        a.id,
+        a.content
+        FROM ib_item_analysis a
+        WHERE a.id in
+        <foreach collection="ids" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="getItemAnalysis" resultType="com.ez.ib.web.bean.ItemStem">
+    SELECT
+    a.id,
+    a.content
+    FROM ib_item_analysis a
+    WHERE a.id=#{id}
+    </select>
+
+    <select id="queryItemAnswers" resultType="com.ez.ib.web.bean.ItemAnswer">
+        SELECT
+        a.id,
+        a.content
+        FROM ib_item_answer a
+        WHERE a.id in
+        <foreach collection="ids" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="getItemAnswers" resultType="com.ez.ib.web.bean.ItemAnswer">
+    SELECT
+    a.id,
+    a.content
+    FROM ib_item_answer a
+    WHERE a.id=#{id}
+    </select>
+
+    <select id="queryItemComments" resultType="com.ez.ib.web.bean.ItemComment">
+        SELECT
+        a.id,
+        a.content
+        FROM ib_item_comment a
+        WHERE a.id in
+        <foreach collection="ids" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="getItemComment" resultType="com.ez.ib.web.bean.ItemComment">
+    SELECT
+    a.id,
+    a.content
+    FROM ib_item_comment a
+    WHERE a.id=#{id}
+    </select>
+
+    <resultMap id="myItemKnowledge" type="com.ez.ib.web.bean.ItemKnowledge">
+        <id property="id" column="itemId"/>
+        <collection property="knowledges" javaType="com.ez.ib.web.bean.Knowledge">
+            <id property="id" column="knowledgeId"/>
+            <result property="content" column="knowledgeContent"/>
+            <result property="parentId" column="parentId"/>
+            <result property="deep" column="deep"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryItemKnowledge" resultMap="myItemKnowledge">
+        SELECT
+        b.itemId,
+        a.id AS knowledgeId,
+        a.content AS knowledgeContent,
+        a.parentId,
+        a.deep
+        FROM ib_knowledge a
+        INNER JOIN ib_item_x_knoledge b ON a.id=b.knowledgeId
+        WHERE b.itemId in
+        <foreach collection="ids" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+    <select id="getItemKnowledge" resultMap="myItemKnowledge">
+        SELECT
+        b.itemId,
+        a.id AS knowledgeId,
+        a.content AS knowledgeContent,
+        a.parentId,
+        a.deep
+        FROM ib_knowledge a
+        INNER JOIN ib_item_x_knoledge b ON a.id=b.knowledgeId
+        WHERE b.itemId=#{id}
+    </select>
 
 </mapper>

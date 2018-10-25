@@ -5,6 +5,7 @@ import com.ez.ib.web.bean.KnowledgeSystem;
 import com.ez.ib.web.service.KnowledgeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,6 +32,8 @@ public class KnowledgeController {
     @Autowired
     private KnowledgeService knowledgeService;
 
+
+
     @RequestMapping(value = "/knowledgesystem/list")
     public ModelAndView queryKnowledgeSystem(HttpServletRequest req,
                                              HttpServletResponse res) throws Exception {
@@ -38,4 +41,13 @@ public class KnowledgeController {
         List<KnowledgeSystem> knowledgeSystems = knowledgeService.queryKnowledgeSystem();
         return ModelAndViewFactory.instance().with("knowledgeSystems", knowledgeSystems).build();
     }
+    @RequestMapping(value = "/search/{testPaperId}")
+    public ModelAndView searchKnowledgeWithTestPaper(@PathVariable long testPaperId,
+                                             HttpServletRequest req,
+                                             HttpServletResponse res) throws Exception {
+        log.debug("searchKnowledgeWithTestPaper controller...");
+        List<KnowledgeSystem> knowledgeSystems = knowledgeService.queryKnowledgeSystem();
+        return ModelAndViewFactory.instance().with("knowledgeSystems", knowledgeSystems).build();
+    }
+
 }

@@ -25,19 +25,27 @@ public class Item {
     private ItemComment comment;
     private Subject subject;
     private LearnSegment learnSegment;
+    private ItemKnowledge itemKnowledge;
 
-    public void setAllId(long id){
+    public ItemKnowledge getItemKnowledge() {
+        if (itemKnowledge == null) {
+            return ItemKnowledge.builder().id(id).build();
+        }
+        return itemKnowledge;
+    }
+
+    public void setAllId(long id) {
         this.id = id;
-        if(itemStem != null){
+        if (itemStem != null) {
             itemStem.setId(id);
         }
-        if(analysis != null){
+        if (analysis != null) {
             analysis.setId(id);
         }
-        if(answer != null){
+        if (answer != null) {
             answer.setId(id);
         }
-        if(comment != null){
+        if (comment != null) {
             comment.setId(id);
         }
     }

@@ -1,5 +1,6 @@
 package com.ez.ib.web.service;
 
+import com.ez.ib.web.bean.Knowledge;
 import com.ez.ib.web.bean.KnowledgeSystem;
 
 import java.util.List;
@@ -16,4 +17,12 @@ import java.util.List;
  */
 public interface KnowledgeService {
     List<KnowledgeSystem> queryKnowledgeSystem();
+
+    List<Knowledge> queryKnowledges(long knowledgeSystemId,
+                                    int subjectId,
+                                    long learnSegmentId);
+
+    List<Knowledge> queryKnowledgesWithTestPaperId(long testPaperId);
+
+
 }

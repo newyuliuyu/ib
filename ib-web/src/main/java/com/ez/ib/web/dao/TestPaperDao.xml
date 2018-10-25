@@ -64,6 +64,22 @@
             </if>
         </where>
     </select>
+    <select id="get" resultMap="myTestPaper">
+        SELECT
+        a.id,
+        a.name,
+        b.id AS subjectId,
+        b.name AS subjectName,
+        c.id AS learnSegmentId,
+        c.name AS learnSegmentName,
+        d.id as knowledgeSysId,
+        d.name as knowledgeSysName
+        FROM ib_test_paper a
+        INNER JOIN ib_subject b ON a.subject=b.id
+        INNER JOIN ib_learn_segment c ON a.learnSegment=c.id
+        LEFT JOIN ib_knowledge_system d on a.knowledgeSys=d.id
+        WHERE a.id=#{id}
+    </select>
 
 
 </mapper>

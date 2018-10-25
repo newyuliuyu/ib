@@ -57,25 +57,9 @@
 
             <div class="tabContent" name="tabCon">
                 <!--<div class="tabContent_header"></div>-->
-                <div style="overflow:auto;border: 1px solid;width: 200px;height: 300px;float: right;position: fixed;left: 300px;">
-                    <div>
-                        <!--<button type="button" class="btn btn-outline-primary">Primary</button>-->
-                        <label><input tabindex="1" type="radio" name="itemtype" class="attribute" value="1">题目</label>
-                        <label><input tabindex="1" type="radio" name="itemtype" class="attribute" value="2">分析</label>
-                        <label><input tabindex="1" type="radio" name="itemtype" class="attribute" value="3">解答</label>
-                        <label><input tabindex="1" type="radio" name="itemtype" class="attribute" value="4">点评</label>
-                        <hr/>
-                        <button id="delSelected" type="button" class="btn btn-outline-secondary">删除选中</button>
-                        <button id="previewItem" type="button" class="btn btn-outline-success">预览</button>
-                        <button id="checkItemIntegrity" type="button" class="btn btn-outline-success">检查题目完整性</button>
-                        <button id="highlightShowItem" type="button" class="btn btn-outline-success">高亮显示题目</button>
-                        <button id="tmpSave" type="button" class="btn btn-outline-success">临时保存</button>
-                        <button id="save" type="button" class="btn btn-outline-success">保存</button>
-                        <button id="save" type="button" class="btn btn-outline-success">保存</button>
-                        <button id="save" type="button" class="btn btn-outline-success">保存</button>
-                        <button id="save" type="button" class="btn btn-outline-success">保存</button>
-                        <button id="save" type="button" class="btn btn-outline-success">保存</button>
-                        <button id="save" type="button" class="btn btn-outline-success">保存</button>
+                <div style="overflow:auto;border: 1px solid;width: 200px;height: 300px;float: right;position: fixed;left: 200px;">
+                    <div id="knowledgeTree" class="ztree">
+
                     </div>
 
                 </div>
@@ -87,7 +71,22 @@
                             <span>知识点：</span><span>无</span>
                         </div>
                         <div class="item-body">
-                            <div _ngcontent-c8="" class="question_work question_content topic-show" id="2a30ea37-79a0-4796-9536-a4923b8d2539"><div>“北通涿郡之渔商，南运江都之转输，其为利也博哉!”这是对我国古代哪一历史现象的高度评价（　　）</div><div><table width="700px"><tbody><tr><td class="td25">A.&nbsp;赵州桥的修建</td><td class="td25">B.&nbsp;大运河的开凿</td><td class="td25">C.&nbsp;指南针用于航海</td><td class="tde">D.&nbsp;市舶司的设立</td></tr></tbody></table></div></div>
+                            <div _ngcontent-c8="" class="question_work question_content topic-show"
+                                 id="2a30ea37-79a0-4796-9536-a4923b8d2539">
+                                <div>“北通涿郡之渔商，南运江都之转输，其为利也博哉!”这是对我国古代哪一历史现象的高度评价（　　）</div>
+                                <div>
+                                    <table width="700px">
+                                        <tbody>
+                                        <tr>
+                                            <td class="td25">A.&nbsp;赵州桥的修建</td>
+                                            <td class="td25">B.&nbsp;大运河的开凿</td>
+                                            <td class="td25">C.&nbsp;指南针用于航海</td>
+                                            <td class="tde">D.&nbsp;市舶司的设立</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
                         </div>
                         <div class="item-footer">
@@ -105,16 +104,22 @@
                         </div>
                         <div class="item-detail">
                             <div class="analysis-item">
-                                <div>结合所学可知，隋朝大运河始建于公元605年，用百余万民工挖通济渠，连接黄河、淮河，后又用十万民工疏通古邗沟，连接淮河、长江，构成下半段。三年后，挖永济渠，到北京南，构成上半段。又过两年，疏通江南运河，直抵余杭（杭州）．至此，共用五百余万民工，费时六年，大运河全线贯通，全长两千七百余千米，成为世界上最伟大的工程之一。大运河沟通了海河、黄河、淮河、长江、钱塘江五大水系，成为贯通南北的交通大动脉，对南北方的经济和文化交流起到重大作用。分析题干材料，可知选项ACD错误。&nbsp;
-                                    <br>故选：B。<br>本题考查隋朝大运河，结合所学即可解答。<br>本题考查隋朝大运河，需要准确掌握大运河的四段、连接的五大水系及大运河开凿的意义等。</div>
+                                <div>
+                                    结合所学可知，隋朝大运河始建于公元605年，用百余万民工挖通济渠，连接黄河、淮河，后又用十万民工疏通古邗沟，连接淮河、长江，构成下半段。三年后，挖永济渠，到北京南，构成上半段。又过两年，疏通江南运河，直抵余杭（杭州）．至此，共用五百余万民工，费时六年，大运河全线贯通，全长两千七百余千米，成为世界上最伟大的工程之一。大运河沟通了海河、黄河、淮河、长江、钱塘江五大水系，成为贯通南北的交通大动脉，对南北方的经济和文化交流起到重大作用。分析题干材料，可知选项ACD错误。&nbsp;
+                                    <br>故选：B。<br>本题考查隋朝大运河，结合所学即可解答。<br>本题考查隋朝大运河，需要准确掌握大运河的四段、连接的五大水系及大运河开凿的意义等。
+                                </div>
                             </div>
                             <div class="answer-item">
-                                <div>结合所学可知，隋朝大运河始建于公元605年，用百余万民工挖通济渠，连接黄河、淮河，后又用十万民工疏通古邗沟，连接淮河、长江，构成下半段。三年后，挖永济渠，到北京南，构成上半段。又过两年，疏通江南运河，直抵余杭（杭州）．至此，共用五百余万民工，费时六年，大运河全线贯通，全长两千七百余千米，成为世界上最伟大的工程之一。大运河沟通了海河、黄河、淮河、长江、钱塘江五大水系，成为贯通南北的交通大动脉，对南北方的经济和文化交流起到重大作用。分析题干材料，可知选项ACD错误。&nbsp;
-                                    <br>故选：B。<br>本题考查隋朝大运河，结合所学即可解答。<br>本题考查隋朝大运河，需要准确掌握大运河的四段、连接的五大水系及大运河开凿的意义等。</div>
+                                <div>
+                                    结合所学可知，隋朝大运河始建于公元605年，用百余万民工挖通济渠，连接黄河、淮河，后又用十万民工疏通古邗沟，连接淮河、长江，构成下半段。三年后，挖永济渠，到北京南，构成上半段。又过两年，疏通江南运河，直抵余杭（杭州）．至此，共用五百余万民工，费时六年，大运河全线贯通，全长两千七百余千米，成为世界上最伟大的工程之一。大运河沟通了海河、黄河、淮河、长江、钱塘江五大水系，成为贯通南北的交通大动脉，对南北方的经济和文化交流起到重大作用。分析题干材料，可知选项ACD错误。&nbsp;
+                                    <br>故选：B。<br>本题考查隋朝大运河，结合所学即可解答。<br>本题考查隋朝大运河，需要准确掌握大运河的四段、连接的五大水系及大运河开凿的意义等。
+                                </div>
                             </div>
                             <div class="review-item">
-                                <div>结合所学可知，隋朝大运河始建于公元605年，用百余万民工挖通济渠，连接黄河、淮河，后又用十万民工疏通古邗沟，连接淮河、长江，构成下半段。三年后，挖永济渠，到北京南，构成上半段。又过两年，疏通江南运河，直抵余杭（杭州）．至此，共用五百余万民工，费时六年，大运河全线贯通，全长两千七百余千米，成为世界上最伟大的工程之一。大运河沟通了海河、黄河、淮河、长江、钱塘江五大水系，成为贯通南北的交通大动脉，对南北方的经济和文化交流起到重大作用。分析题干材料，可知选项ACD错误。&nbsp;
-                                    <br>故选：B。<br>本题考查隋朝大运河，结合所学即可解答。<br>本题考查隋朝大运河，需要准确掌握大运河的四段、连接的五大水系及大运河开凿的意义等。</div>
+                                <div>
+                                    结合所学可知，隋朝大运河始建于公元605年，用百余万民工挖通济渠，连接黄河、淮河，后又用十万民工疏通古邗沟，连接淮河、长江，构成下半段。三年后，挖永济渠，到北京南，构成上半段。又过两年，疏通江南运河，直抵余杭（杭州）．至此，共用五百余万民工，费时六年，大运河全线贯通，全长两千七百余千米，成为世界上最伟大的工程之一。大运河沟通了海河、黄河、淮河、长江、钱塘江五大水系，成为贯通南北的交通大动脉，对南北方的经济和文化交流起到重大作用。分析题干材料，可知选项ACD错误。&nbsp;
+                                    <br>故选：B。<br>本题考查隋朝大运河，结合所学即可解答。<br>本题考查隋朝大运河，需要准确掌握大运河的四段、连接的五大水系及大运河开凿的意义等。
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -125,7 +130,22 @@
                             <span>知识点：</span><span>无</span>
                         </div>
                         <div class="item-body">
-                            <div _ngcontent-c8="" class="question_work question_content topic-show" id="2a30ea37-79a0-4796-9536-a4923b8d2539"><div>“北通涿郡之渔商，南运江都之转输，其为利也博哉!”这是对我国古代哪一历史现象的高度评价（　　）</div><div><table width="700px"><tbody><tr><td class="td25">A.&nbsp;赵州桥的修建</td><td class="td25">B.&nbsp;大运河的开凿</td><td class="td25">C.&nbsp;指南针用于航海</td><td class="tde">D.&nbsp;市舶司的设立</td></tr></tbody></table></div></div>
+                            <div _ngcontent-c8="" class="question_work question_content topic-show"
+                                 id="2a30ea37-79a0-4796-9536-a4923b8d2539">
+                                <div>“北通涿郡之渔商，南运江都之转输，其为利也博哉!”这是对我国古代哪一历史现象的高度评价（　　）</div>
+                                <div>
+                                    <table width="700px">
+                                        <tbody>
+                                        <tr>
+                                            <td class="td25">A.&nbsp;赵州桥的修建</td>
+                                            <td class="td25">B.&nbsp;大运河的开凿</td>
+                                            <td class="td25">C.&nbsp;指南针用于航海</td>
+                                            <td class="tde">D.&nbsp;市舶司的设立</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
                         </div>
                         <div class="item-footer">
@@ -143,25 +163,28 @@
                         </div>
                         <div class="item-detail">
                             <div class="analysis-item">
-                                <div>结合所学可知，隋朝大运河始建于公元605年，用百余万民工挖通济渠，连接黄河、淮河，后又用十万民工疏通古邗沟，连接淮河、长江，构成下半段。三年后，挖永济渠，到北京南，构成上半段。又过两年，疏通江南运河，直抵余杭（杭州）．至此，共用五百余万民工，费时六年，大运河全线贯通，全长两千七百余千米，成为世界上最伟大的工程之一。大运河沟通了海河、黄河、淮河、长江、钱塘江五大水系，成为贯通南北的交通大动脉，对南北方的经济和文化交流起到重大作用。分析题干材料，可知选项ACD错误。&nbsp;
-                                    <br>故选：B。<br>本题考查隋朝大运河，结合所学即可解答。<br>本题考查隋朝大运河，需要准确掌握大运河的四段、连接的五大水系及大运河开凿的意义等。</div>
+                                <div>
+                                    结合所学可知，隋朝大运河始建于公元605年，用百余万民工挖通济渠，连接黄河、淮河，后又用十万民工疏通古邗沟，连接淮河、长江，构成下半段。三年后，挖永济渠，到北京南，构成上半段。又过两年，疏通江南运河，直抵余杭（杭州）．至此，共用五百余万民工，费时六年，大运河全线贯通，全长两千七百余千米，成为世界上最伟大的工程之一。大运河沟通了海河、黄河、淮河、长江、钱塘江五大水系，成为贯通南北的交通大动脉，对南北方的经济和文化交流起到重大作用。分析题干材料，可知选项ACD错误。&nbsp;
+                                    <br>故选：B。<br>本题考查隋朝大运河，结合所学即可解答。<br>本题考查隋朝大运河，需要准确掌握大运河的四段、连接的五大水系及大运河开凿的意义等。
+                                </div>
                             </div>
                             <div class="answer-item">
-                                <div>结合所学可知，隋朝大运河始建于公元605年，用百余万民工挖通济渠，连接黄河、淮河，后又用十万民工疏通古邗沟，连接淮河、长江，构成下半段。三年后，挖永济渠，到北京南，构成上半段。又过两年，疏通江南运河，直抵余杭（杭州）．至此，共用五百余万民工，费时六年，大运河全线贯通，全长两千七百余千米，成为世界上最伟大的工程之一。大运河沟通了海河、黄河、淮河、长江、钱塘江五大水系，成为贯通南北的交通大动脉，对南北方的经济和文化交流起到重大作用。分析题干材料，可知选项ACD错误。&nbsp;
-                                    <br>故选：B。<br>本题考查隋朝大运河，结合所学即可解答。<br>本题考查隋朝大运河，需要准确掌握大运河的四段、连接的五大水系及大运河开凿的意义等。</div>
+                                <div>
+                                    结合所学可知，隋朝大运河始建于公元605年，用百余万民工挖通济渠，连接黄河、淮河，后又用十万民工疏通古邗沟，连接淮河、长江，构成下半段。三年后，挖永济渠，到北京南，构成上半段。又过两年，疏通江南运河，直抵余杭（杭州）．至此，共用五百余万民工，费时六年，大运河全线贯通，全长两千七百余千米，成为世界上最伟大的工程之一。大运河沟通了海河、黄河、淮河、长江、钱塘江五大水系，成为贯通南北的交通大动脉，对南北方的经济和文化交流起到重大作用。分析题干材料，可知选项ACD错误。&nbsp;
+                                    <br>故选：B。<br>本题考查隋朝大运河，结合所学即可解答。<br>本题考查隋朝大运河，需要准确掌握大运河的四段、连接的五大水系及大运河开凿的意义等。
+                                </div>
                             </div>
                             <div class="review-item">
-                                <div>结合所学可知，隋朝大运河始建于公元605年，用百余万民工挖通济渠，连接黄河、淮河，后又用十万民工疏通古邗沟，连接淮河、长江，构成下半段。三年后，挖永济渠，到北京南，构成上半段。又过两年，疏通江南运河，直抵余杭（杭州）．至此，共用五百余万民工，费时六年，大运河全线贯通，全长两千七百余千米，成为世界上最伟大的工程之一。大运河沟通了海河、黄河、淮河、长江、钱塘江五大水系，成为贯通南北的交通大动脉，对南北方的经济和文化交流起到重大作用。分析题干材料，可知选项ACD错误。&nbsp;
-                                    <br>故选：B。<br>本题考查隋朝大运河，结合所学即可解答。<br>本题考查隋朝大运河，需要准确掌握大运河的四段、连接的五大水系及大运河开凿的意义等。</div>
+                                <div>
+                                    结合所学可知，隋朝大运河始建于公元605年，用百余万民工挖通济渠，连接黄河、淮河，后又用十万民工疏通古邗沟，连接淮河、长江，构成下半段。三年后，挖永济渠，到北京南，构成上半段。又过两年，疏通江南运河，直抵余杭（杭州）．至此，共用五百余万民工，费时六年，大运河全线贯通，全长两千七百余千米，成为世界上最伟大的工程之一。大运河沟通了海河、黄河、淮河、长江、钱塘江五大水系，成为贯通南北的交通大动脉，对南北方的经济和文化交流起到重大作用。分析题干材料，可知选项ACD错误。&nbsp;
+                                    <br>故选：B。<br>本题考查隋朝大运河，结合所学即可解答。<br>本题考查隋朝大运河，需要准确掌握大运河的四段、连接的五大水系及大运河开凿的意义等。
+                                </div>
                             </div>
                         </div>
                     </div>
 
 
                     <!--end-->
-
-
-
 
 
                 </div>

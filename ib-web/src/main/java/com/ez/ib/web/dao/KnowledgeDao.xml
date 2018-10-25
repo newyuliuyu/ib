@@ -5,5 +5,25 @@
 		SELECT id,name FROM ib_knowledge_system
 	</select>
 
+    <select id="queryKnowledge" resultType="com.ez.ib.web.bean.Knowledge">
+		select id,content,parentId,deep from ib_knowledge a
+		where a.knowledgeSystemId=#{knowledgeSystemId}
+			  and a.subject=#{subjectId}
+			  and a.learnSegment=#{learnSegmentId}
+	</select>
+
+    <select id="queryKnowledges" resultType="com.ez.ib.web.bean.Knowledge">
+		select id,content,parentId,deep from ib_knowledge a
+		where a.id in
+		<foreach collection="ids" item="item" index="index" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</select>
+
+    <select id="getKnowledge" resultType="com.ez.ib.web.bean.Knowledge">
+		select id,content,parentId,deep from ib_knowledge a
+		where a.id=#{id}
+	</select>
+
 
 </mapper>

@@ -1,6 +1,7 @@
 package com.ez.ib.web.dao;
 
 import com.ez.ib.web.bean.LearnSegment;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,4 +19,8 @@ import java.util.List;
 @Repository
 public interface LearnSegmentDao {
     List<LearnSegment> queryAllLearnSegment();
+
+    List<LearnSegment> queryLearnSegmentWithIds(@Param("ids") List<Integer> ids);
+
+
 }

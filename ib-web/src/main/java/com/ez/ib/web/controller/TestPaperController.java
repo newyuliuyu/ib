@@ -97,10 +97,11 @@ public class TestPaperController {
 
         log.debug("searchTestPaper controller");
         testPaperService.updateTestPaperKnowledgeSystem(testPaper);
-        
+
         return ModelAndViewFactory.instance()
                 .build();
     }
+
 
 
 }

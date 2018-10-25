@@ -24,6 +24,8 @@ public interface TestPaperDao {
     void saveTestPaperItem(@Param("testPaperItem") TestPaperItem testPaperItem);
 
 
+    TestPaper get(@Param("id") long id);
+
     List<TestPaper> queryTestPapers(@Param("subjectId") long subjectId,
                                     @Param("learnSegmentId") long learnSegmentId,
                                     @Param("name") String name);
