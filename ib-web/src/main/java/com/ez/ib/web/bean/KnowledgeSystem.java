@@ -20,6 +20,6 @@ import lombok.*;
 @ToString(of = {"id", "name"})
 @EqualsAndHashCode(of = "id")
 public class KnowledgeSystem {
-    private long id;
+    private Long id;
     private String name;
 }

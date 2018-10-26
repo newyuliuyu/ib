@@ -39,7 +39,7 @@ public class TestPaperServiceImplTest {
         LearnSegment learnSegment = LearnSegment.builder().id(3).build();
         for (int i = 1; i <= 13; i++) {
             TestPaper testPaper = TestPaper.builder()
-                    .id(i)
+                    .id((long)i)
                     .name("测试试卷" + i)
                     .subject(subject)
                     .learnSegment(learnSegment)

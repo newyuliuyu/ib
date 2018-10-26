@@ -21,6 +21,6 @@ import lombok.*;
 @EqualsAndHashCode(of = "id")
 public class ItemAnswer {
     //题目解答
-    private long id;
+    private Long id;
     private String content;
 }

@@ -22,6 +22,7 @@
 
 .item-list .item-detail {
     border-top: 1px solid #69d8c9;
+    display: none;
 }
 
 .item-list .item-detail .analysis-item {
@@ -37,4 +38,20 @@
 .item-list .item-detail .review-item {
     border-bottom: 1px dashed #b9b7b9;
     padding: 10px;
+}
+
+.item-analysis-btn{
+    display: inline-block;
+    padding: 10px;
+
+    line-height: 25px;
+
+    cursor: pointer;
+    margin: 0px 10px;
+}
+.item-analysis-btn-active{
+    border: 1px solid #69d8c9;
+    background-color: #fff;
+    border-bottom: #fff;
+    line-height: 26px;
 }

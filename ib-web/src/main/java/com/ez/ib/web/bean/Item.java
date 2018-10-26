@@ -18,7 +18,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Item {
-    private long id;
+    private Long id;
     private ItemStem itemStem;
     private ItemAnalysis analysis;
     private ItemAnswer answer;

@@ -21,6 +21,38 @@ import java.util.List;
 @Builder
 @EqualsAndHashCode(of = "id")
 public class ItemKnowledge {
-    private long id;
+    private Long id;
     private List<Knowledge> knowledges;
+
+    public boolean isHasKnowledge() {
+        return knowledges != null && !knowledges.isEmpty();
+    }
+
+    public String getKnowledgeIds() {
+        if (isHasKnowledge()) {
+            StringBuffer sb = new StringBuffer();
+            for (Knowledge k : knowledges) {
+                sb.append(k.getId()).append(",");
+            }
+            if (sb.length() > 0) {
+                sb = sb.deleteCharAt(sb.length() - 1);
+            }
+            return sb.toString();
+        }
+        return "";
+    }
+
+    public String getKnowledgeNames() {
+        if (isHasKnowledge()) {
+            StringBuffer sb = new StringBuffer();
+            for (Knowledge k : knowledges) {
+                sb.append(k.getContent()).append(",");
+            }
+            if (sb.length() > 0) {
+                sb = sb.deleteCharAt(sb.length() - 1);
+            }
+            return sb.toString();
+        }
+        return "";
+    }
 }

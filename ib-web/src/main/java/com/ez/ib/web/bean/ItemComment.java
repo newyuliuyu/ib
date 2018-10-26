@@ -21,6 +21,6 @@ import lombok.*;
 @EqualsAndHashCode(of = "id")
 public class ItemComment {
     //题目评论
-    private long id;
+    private Long id;
     private String content;
 }

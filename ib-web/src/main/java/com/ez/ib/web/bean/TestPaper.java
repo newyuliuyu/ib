@@ -20,7 +20,7 @@ import lombok.*;
 @ToString(of = {"id", "name"})
 @EqualsAndHashCode(of = "id")
 public class TestPaper {
-    private long id;
+    private Long id;
     private String name;
     private Subject subject;
     private LearnSegment learnSegment;

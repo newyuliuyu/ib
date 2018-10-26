@@ -43,14 +43,14 @@
     </insert>
 
     <delete id="deleteItemKnowledge">
-        delete from ib_item_x_knoledge where itemId=#{itemKnowledge.itemId}
+        delete from ib_item_x_knoledge where itemId=#{itemKnowledge.id}
     </delete>
 
     <insert id="saveItemKnowLedge">
         INSERT INTO ib_item_x_knoledge(itemId,knowledgeId)
         VALUES
         <foreach collection="itemKnowledge.knowledges" item="item" index="index" separator=",">
-            (#{itemKnowledge.id},#{item.content})
+            (#{itemKnowledge.id},#{item.id})
         </foreach>
     </insert>
 
@@ -188,7 +188,7 @@
 
     <resultMap id="myItemKnowledge" type="com.ez.ib.web.bean.ItemKnowledge">
         <id property="id" column="itemId"/>
-        <collection property="knowledges" javaType="com.ez.ib.web.bean.Knowledge">
+        <collection property="knowledges" ofType="com.ez.ib.web.bean.Knowledge">
             <id property="id" column="knowledgeId"/>
             <result property="content" column="knowledgeContent"/>
             <result property="parentId" column="parentId"/>

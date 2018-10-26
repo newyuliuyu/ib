@@ -68,7 +68,7 @@ public class TestPaperController {
     public ModelAndView searchTestPaper(HttpServletRequest req,
                                         HttpServletResponse res) throws Exception {
 
-        log.debug("查询题目controller");
+        log.debug("searchTestPaper controller");
         long subjectId = HttpReqUtils.getParamLong(req, "subjectId");
         long learnSegmentId = HttpReqUtils.getParamLong(req, "learnSegmentId");
         String name = HttpReqUtils.getParamString(req, "name");

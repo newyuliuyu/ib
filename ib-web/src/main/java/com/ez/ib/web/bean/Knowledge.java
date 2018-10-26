@@ -20,9 +20,9 @@ import lombok.*;
 @ToString(of = {"id", "content"})
 @EqualsAndHashCode(of = "id")
 public class Knowledge {
-    private long id;
+    private Long id;
     private String content;
-    private long parentId;
+    private Long parentId;
     private int deep;
     private Subject subject;
     private LearnSegment learnSegment;

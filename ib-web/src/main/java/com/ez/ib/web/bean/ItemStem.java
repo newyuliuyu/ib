@@ -20,6 +20,6 @@ import lombok.*;
 @ToString(of = {"id", "content"})
 @EqualsAndHashCode(of = "id")
 public class ItemStem {
-    private long id;
+    private Long id;
     private String content;
 }

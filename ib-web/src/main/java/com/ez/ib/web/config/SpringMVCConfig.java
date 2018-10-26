@@ -158,10 +158,11 @@ public class SpringMVCConfig extends WebMvcConfigurationSupport {
                 SerializerFeature.WriteEnumUsingToString);
         fastJsonConfig.setDateFormat("yyyy-MM-dd");
 
-        SerializeConfig serializeConfig = fastJsonConfig.getSerializeConfig();
-
+        SerializeConfig serializeConfig = new SerializeConfig();//fastJsonConfig.getSerializeConfig();
         serializeConfig.put(Long.class, ToStringSerializer.instance);
         serializeConfig.put(long.class, ToStringSerializer.instance);
+        serializeConfig.put(long[].class, ToStringSerializer.instance);
+        fastJsonConfig.setSerializeConfig(serializeConfig);
 
         FastJsonJsonView view = new FastJsonJsonView();
         view.setFastJsonConfig(fastJsonConfig);
