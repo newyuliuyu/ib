@@ -1,8 +1,11 @@
 package com.ez.ib.web.controller;
 
 import com.ez.common.mvc.ModelAndViewFactory;
+import com.ez.common.util.FileUtil;
+import com.ez.common.util.IdGenerator;
 import com.ez.ib.web.utils.DocxToHtml;
 import com.ez.ib.web.utils.HtmlItemProcessHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +38,9 @@ public class DocxPaperItemIntoDbController {
     @Value("${html.image.root.path:''}")
     private String htmlImageRootPath;
 
+    @Autowired
+    private IdGenerator idGenerator;
+
     @RequestMapping("/fetch/docx/paper/item")
     public ModelAndView fetchDocxPaperItem(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String docxname = request.getParameter("wordname");
@@ -48,7 +54,11 @@ public class DocxPaperItemIntoDbController {
         FileInputStream in = new FileInputStream(path.toFile());
         String result = "";
         try {
-            String html = DocxToHtml.toHtml(in, saveDocxImageDir, htmlImageRootPath);
+            long id = idGenerator.nextId();
+
+            String html = DocxToHtml.toHtml(in,
+                    FileUtil.getPath(saveDocxImageDir) + "/" + id,
+                    FileUtil.getPath(htmlImageRootPath) + "/" + id);
             HtmlItemProcessHandler htmlItemProcessHandler = new HtmlItemProcessHandler(html);
             result = htmlItemProcessHandler.process();
             System.out.println(result);
@@ -61,6 +71,13 @@ public class DocxPaperItemIntoDbController {
 //        String result = "llll";
 
         return ModelAndViewFactory.instance().with("html", result).build();
+    }
+
+    private String processURL(String url) {
+        if (url.endsWith("/") || url.endsWith("\\")) {
+            url = url.substring(0, url.length() - 1);
+        }
+        return url;
     }
 
     private void checkParam() {

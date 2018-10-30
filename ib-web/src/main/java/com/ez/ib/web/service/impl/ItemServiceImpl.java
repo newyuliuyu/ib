@@ -4,6 +4,7 @@ import com.ez.ib.web.bean.Item;
 import com.ez.ib.web.bean.ItemKnowledge;
 import com.ez.ib.web.dao.*;
 import com.ez.ib.web.service.ItemService;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,18 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> queryItemWithTestPaper(long testPaperId) {
         List<Item> items = itemDao.queryItemWithTestPaper(testPaperId);
         setItemAttr(items);
+        return items;
+    }
+
+    @Override
+    public List<Item> queryItemWithKnowlege(List<Long> knowledgeIds) {
+        Assert.isTrue(knowledgeIds != null && !knowledgeIds.isEmpty(), "知识点ID不能为null");
+        List<Long> itemIds = itemDao.queryItemIdWithKnowledge(knowledgeIds);
+        List<Item> items = Lists.newArrayList();
+        if (itemIds != null && !itemIds.isEmpty()) {
+            items = itemDao.queryItemWithIds(itemIds);
+            setItemAttr(items);
+        }
         return items;
     }
 

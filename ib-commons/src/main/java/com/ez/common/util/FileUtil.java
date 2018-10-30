@@ -33,4 +33,12 @@ public class FileUtil {
         int idx = fileName.lastIndexOf('.');
         return fileName.substring(idx);
     }
+
+
+    public static String getPath(String path) {
+        if (path.endsWith("/") || path.endsWith("\\")) {
+            path = path.substring(0, path.length() - 1);
+        }
+        return path;
+    }
 }

@@ -80,7 +80,7 @@
         }
 
         function showItem(dataset) {
-            console.log(dataset)
+            //console.log(dataset)
             var templateText = $("#itemT").text();
             var arrText = dot.template(templateText);
             var html = arrText(dataset);

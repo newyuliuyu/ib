@@ -2,6 +2,8 @@ package com.ez.ib.web.utils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Entities;
 import org.jsoup.select.Elements;
 import org.junit.Test;
 
@@ -25,11 +27,11 @@ public class DocxToHtmlTest {
 
     @Test
     public void testDocxToHtml() throws Exception {
-        Path docxfilepath = Paths.get("/home/liuyu/tmp/word2html/wordfile/22.docx");
+        Path docxfilepath = Paths.get("/home/liuyu/tmp/word2html/wordfile/33.docx");
         Path htmlfilepath = Paths.get("/home/liuyu/tmp/word2html/my.html");
 
-        String saveDocxImageDir = "/home/liuyu/tmp/word2html";
-        String htmlImageRootPath = "/home/liuyu/tmp/word2html";
+        String saveDocxImageDir = "/home/liuyu/tmp/word2html/docimage";
+        String htmlImageRootPath = "/home/liuyu/tmp/word2html/docimage";
 
         File docxfile = docxfilepath.toFile();
         File htmlfile = htmlfilepath.toFile();
@@ -40,11 +42,11 @@ public class DocxToHtmlTest {
     }
     @Test
     public void testDocxToHtmlString() throws Exception {
-        Path docxfilepath = Paths.get("/home/liuyu/tmp/word2html/wordfile/22.docx");
+        Path docxfilepath = Paths.get("/home/liuyu/tmp/word2html/wordfile/33.docx");
 //        Path htmlfilepath = Paths.get("/home/liuyu/tmp/word2html/my.html");
 
-        String saveDocxImageDir = "/home/liuyu/tmp/word2html";
-        String htmlImageRootPath = "/home/liuyu/tmp/word2html";
+        String saveDocxImageDir = "/home/liuyu/tmp/docimage";
+        String htmlImageRootPath = "/home/liuyu/tmp/docimage";
 
         File docxfile = docxfilepath.toFile();
 //        File htmlfile = htmlfilepath.toFile();
@@ -56,9 +58,21 @@ public class DocxToHtmlTest {
         System.out.println(html);
 
         Document doc = Jsoup.parse(html);
-        Elements elements = doc.select("body");
-       elements.select("div").removeAttr("style");
-        System.out.println(elements.html());
+        doc.outputSettings().escapeMode(Entities.EscapeMode.xhtml);
+        doc.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
+        doc.outputSettings().charset("UTF-8");
+//        doc.outputSettings().prettyPrint(false);
+
+        String a = "aa";
+        Elements elements = doc.select("body > div > p,table");
+        for(Element e:elements){
+            String text  = e.text();
+            System.out.println(text+"："+text.length());
+        }
+
+//        Elements elements = doc.select("body");
+//       elements.select("div").removeAttr("style");
+//        System.out.println(elements.html());
     }
 
 }

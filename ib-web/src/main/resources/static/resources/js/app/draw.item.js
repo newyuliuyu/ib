@@ -249,6 +249,7 @@
             $('#previewItem').click(function () {
 
                 var items = getItems();
+                console.log(items)
                 var mydataset = {items: items};
                 var templateText = $("#viewItemT").text();
                 var arrText = dot.template(templateText);
@@ -276,6 +277,9 @@
                     item.review = $(this).html();
                 }
             });
+            if (item !== undefined) {
+                items.push(item)
+            }
             return items;
         }
 

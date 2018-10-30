@@ -405,25 +405,43 @@ public class XHTMLMapper
         if (cssStyle != null) {
             TableCellBorder border = getStylesDocument().getTableBorder(table, BorderSide.TOP);
             if (border != null) {
-                String style = border.getBorderSize() + "px solid " + StringUtils.toHexString(border.getBorderColor());
+                //修改过
+                float borderSize=0;
+                if(border.hasBorder() && border.getBorderSize()<=0){
+                    borderSize=1;
+                }
+                String style = borderSize + "px solid " + StringUtils.toHexString(border.getBorderColor());
                 cssStyle.addProperty(CSSStylePropertyConstants.BORDER_TOP, style);
             }
 
             border = getStylesDocument().getTableBorder(table, BorderSide.BOTTOM);
             if (border != null) {
-                String style = border.getBorderSize() + "px solid " + StringUtils.toHexString(border.getBorderColor());
+                //修改过
+                float borderSize=0;
+                if(border.hasBorder() && border.getBorderSize()<=0){
+                    borderSize=1;
+                }
+                String style = borderSize + "px solid " + StringUtils.toHexString(border.getBorderColor());
                 cssStyle.addProperty(CSSStylePropertyConstants.BORDER_BOTTOM, style);
             }
 
             border = getStylesDocument().getTableBorder(table, BorderSide.LEFT);
             if (border != null) {
-                String style = border.getBorderSize() + "px solid " + StringUtils.toHexString(border.getBorderColor());
+                float borderSize=0;
+                if(border.hasBorder() && border.getBorderSize()<=0){
+                    borderSize=1;
+                }
+                String style = borderSize + "px solid " + StringUtils.toHexString(border.getBorderColor());
                 cssStyle.addProperty(CSSStylePropertyConstants.BORDER_LEFT, style);
             }
 
             border = getStylesDocument().getTableBorder(table, BorderSide.RIGHT);
             if (border != null) {
-                String style = border.getBorderSize() + "px solid " + StringUtils.toHexString(border.getBorderColor());
+                float borderSize=0;
+                if(border.hasBorder() && border.getBorderSize()<=0){
+                    borderSize=1;
+                }
+                String style = borderSize + "px solid " + StringUtils.toHexString(border.getBorderColor());
                 cssStyle.addProperty(CSSStylePropertyConstants.BORDER_RIGHT, style);
             }
         }

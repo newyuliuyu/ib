@@ -1,7 +1,5 @@
 package com.ez.ib.web.utils;
 
-import fr.opensagres.poi.xwpf.converter.core.BasicURIResolver;
-import fr.opensagres.poi.xwpf.converter.core.FileImageExtractor;
 import fr.opensagres.poi.xwpf.converter.core.XWPFConverterException;
 import fr.opensagres.poi.xwpf.converter.xhtml.DefaultContentHandlerFactory;
 import fr.opensagres.poi.xwpf.converter.xhtml.IContentHandlerFactory;
@@ -12,7 +10,10 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.xml.sax.ContentHandler;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Writer;
 
 /**
  * ClassName: DocxToHtmlHander <br/>
@@ -57,11 +58,12 @@ public class DocxToHtmlHander {
 
         XHTMLOptions options = XHTMLOptions.create();
 //        ImageManager imageManager = new ImageManager(new File(info.getSaveDocxImageDir()), info.getHtmlImageRootPath());
-//        options.setImageManager(imageManager);
-        // 存放图片的文件夹
-        options.setExtractor(new FileImageExtractor(new File(info.getSaveDocxImageDir())));
-        // html中图片的路径
-        options.URIResolver(new BasicURIResolver(info.getHtmlImageRootPath()));
+        DocxAndHtmlImageManager imageManager = new DocxAndHtmlImageManager(info.getSaveDocxImageDir(), info.getHtmlImageRootPath());
+        options.setImageManager(imageManager);
+//        // 存放图片的文件夹
+//        options.setExtractor(new FileImageExtractor(new File(info.getSaveDocxImageDir())));
+//        // html中图片的路径
+//        options.URIResolver(new BasicURIResolver(info.getHtmlImageRootPath()));
         return options;
     }
 

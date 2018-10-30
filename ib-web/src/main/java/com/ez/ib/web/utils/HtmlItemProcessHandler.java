@@ -99,7 +99,7 @@ public class HtmlItemProcessHandler {
     }
 
     private Elements getItemEs() {
-        Elements elements = doc.select("body > div > p");
+        Elements elements = doc.select("body > div > p,table");
         return elements;
     }
 
@@ -107,61 +107,65 @@ public class HtmlItemProcessHandler {
 
         if (itemEs.size() > 0) {
 //            itemEs.wrap("<div class=\"item\"></div>");
-            Element wrap = null;
-            for (Element e : itemEs) {
-                if (wrap == null) {
-                    wrap = e.wrap("<div class=\"ez-item\"></div>").parent();
-                } else {
-                    wrap.appendChild(e);
-                }
-            }
-            if (wrap != null) {
-                wrap.after("<br/>");
-            }
+            htmlWrap(itemEs,"ez-item");
         }
-        if (itemEs.size() > 0) {
+        if (analysisItemEs.size() > 0) {
 //            analysisItemEs.wrap("<div class=\"analysisItem\"></div>");
-            Element wrap = null;
-            for (Element e : analysisItemEs) {
-                if (wrap == null) {
-                    wrap = e.wrap("<div class=\"ez-analysis-item\"></div>").parent();
-                } else {
-                    wrap.appendChild(e);
-                }
-            }
-            if (wrap != null) {
-                wrap.after("<br/>");
-            }
+            htmlWrap(analysisItemEs,"ez-analysis-item");
         }
         if (answerItemEs.size() > 0) {
 //            answerItemEs.wrap("<div class=\"answerItem\"></div>");
-            Element wrap = null;
-            for (Element e : answerItemEs) {
-                if (wrap == null) {
-                    wrap = e.wrap("<div class=\"ez-answer-item\"></div>").parent();
-                } else {
-                    wrap.appendChild(e);
-                }
-            }
-            if (wrap != null) {
-                wrap.after("<br/>");
-            }
+            htmlWrap(answerItemEs,"ez-answer-item");
         }
         if (reviewItemEs.size() > 0) {
 //            reviewItemEs.wrap("<div class=\"reviewItem\"></div>");
-            Element wrap = null;
-            for (Element e : reviewItemEs) {
-                if (wrap == null) {
-                    wrap = e.wrap("<div class=\"ez-review-item\"></div>").parent();
-                } else {
-                    wrap.appendChild(e);
-                }
-            }
-            if (wrap != null) {
-                wrap.after("<br/>");
-            }
+            htmlWrap(reviewItemEs,"ez-review-item");
         }
     }
 
 
+    private void htmlWrap(Elements elements,String className) {
+        int end = findEndElementPosition(elements);
+        Element wrap = null;
+        for (int i = 0; i < end; i++) {
+            Element e = elements.get(i);
+            wrap = addWrap(wrap, e, false,className);
+        }
+        addWrap(wrap, null, true,className);
+    }
+
+    private Element addWrap(Element wrap, Element e, boolean isEnd,String className) {
+        if (isEnd && wrap != null) {
+            wrap.after("<br/>");
+            return wrap;
+        }
+        if (wrap == null) {
+            wrap = e.wrap("<div class=\""+className+"\"></div>").parent();
+        } else {
+            wrap.appendChild(e);
+        }
+        return wrap;
+    }
+
+    private int findEndElementPosition(Elements elements) {
+        int size = elements.size();
+        int end = size;
+        for (int i = size - 1; i >= 0; i--) {
+            Element e = elements.get(i);
+            if (isElementEmpty(e)) {
+                break;
+            }
+            end = i;
+        }
+        return end;
+    }
+
+
+    private boolean isElementEmpty(Element e) {
+        Elements imgs = e.select("img");
+        String text = e.text().trim();
+        return !imgs.isEmpty()
+                || (!text.equals("") && text.length() > 1)
+                || (text.length() == 1 && text.charAt(0) != 12288);
+    }
 }

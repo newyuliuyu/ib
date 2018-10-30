@@ -16,7 +16,7 @@
     var pathName = document.location.pathname;
     var index = pathName.substr(1).indexOf("/");
     var myContextPath = pathName.substr(0, index + 1);
-    window["app"] = {rootPath: myContextPath + '/', entry: 'bound.knowledge'};
+    window["app"] = {rootPath: myContextPath + '/', entry: 'find.knowledge'};
 
     var script = document.createElement("script");
     script.setAttribute("type", "text/javascript");
@@ -55,14 +55,21 @@
             </div>
 
             <div class="tabContent" name="tabCon">
-                <!--<div class="tabContent_header"></div>-->
+                <div class="tabContent_header">
+
+                    <div class="input-group">
+                        <textarea id="knowledgeContent" class="form-control" aria-label="With textarea"></textarea>
+                        <div class="input-group-prepend">
+                            <a href="javascript:void(0);" class="search-knowledge input-group-text">查询</a>
+                        </div>
+                    </div>
+                </div>
                 <!--<div style="overflow:auto;border: 1px solid;width: 200px;height: 300px;float: right;position: fixed;left: 200px;">-->
                 <!--<div id="knowledgeTree" class="ztree">-->
                 <!--</div>-->
                 <!--</div>-->
 
                 <div class="tabContent_body">
-
 
                 </div>
             </div>
@@ -75,49 +82,34 @@
 </body>
 </html>
 <script id="itemT" type="text/x-dot-template">
-    {{~it.items:item:index}}
-    <div class="item-list" data-itemId="{{=item.id}}">
-        <div class="item-top">
-            <span>知识点：</span>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">知识点</th>
+            <th scope="col">ID</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{~it.knowledges:item:index}}
+        <tr {{? item.id==="0" }} style="background-color:#ea9e9e;" {{?}}>
+            <th scope="row">{{=index+1}}</th>
+            <td>{{=item.content}}</td>
+            <td>
+                {{? item.id==="0"}}
+                    没有查询到该知识点
+                {{??}}
+                    {{=item.id}}
+                {{?}}
+            </td>
+        </tr>
+        {{~}}
+        </tbody>
+    </table>
 
-            {{? item.itemKnowledge.hasKnowledge}}
-            <span>
-                <a href="javascript:void(0);"
-                   itemId="{{=item.id}}"
-                   class="setting-knowledge" ids="{{=item.itemKnowledge.knowledgeIds}}">
-                        {{=item.itemKnowledge.knowledgeNames}}
-                    </a>
-            </span>
 
-            {{??}}
-            <span><a href="javascript:void(0);" itemId="{{=item.id}}" class="setting-knowledge">无</a></span>
-            {{?}}
 
-        </div>
-        <div class="item-body">
-            <!--题干-->
-            {{=item.itemStem.content}}
-        </div>
-        <div class="item-footer">
-            <span>&nbsp;</span>
-            <a class="float-right item-analysis-btn">解析</a>
 
-        </div>
-        <div class="item-detail">
-            <div class="analysis-item">
-                <!--解题思路分析-->
-                {{=item.analysis.content}}
-            </div>
-            <div class="answer-item">
-                <!--解答-->
-                {{=item.answer.content}}
-            </div>
-            <div class="review-item">
-                <!--点评-->
-                {{=item.comment.content}}
-            </div>
-        </div>
-    </div>
-    {{~}}
+
 
 </script>

@@ -27,4 +27,6 @@ public interface KnowledgeDao {
 
     List<Knowledge> queryKnowledges(@Param("ids") List<Long> ids);
     Knowledge getKnowledge(@Param("id") long id);
+
+    List<Knowledge> queryKnowledgesWithContent(@Param("contents") List<String> contents);
 }

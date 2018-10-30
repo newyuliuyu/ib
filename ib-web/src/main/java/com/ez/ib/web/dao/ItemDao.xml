@@ -221,5 +221,30 @@
         INNER JOIN ib_item_x_knoledge b ON a.id=b.knowledgeId
         WHERE b.itemId=#{id}
     </select>
+    <select id="queryItemIdWithKnowledge" resultType="long">
+        SELECT
+        distinct itemId
+        FROM ib_item_x_knoledge a
+        WHERE a.knowledgeId in
+        <foreach collection="ids" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="queryItemWithIds" resultMap="myItem">
+        SELECT
+        a.id,
+        a.stem as itemStemId,
+        a.analysisId as analysisId,
+        a.answerId as answerId,
+        a.commentId as commentId,
+        a.subjectId as subjectId,
+        a.learnSegmentId as learnSegmentId
+        FROM ib_item a
+        WHERE a.id in
+        <foreach collection="ids" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
 
 </mapper>

@@ -21,5 +21,7 @@ public interface ItemService {
 
     List<Item> queryItemWithTestPaper(long testPaperId);
 
+    List<Item> queryItemWithKnowlege(List<Long> knowledgeIds);
+
 
 }

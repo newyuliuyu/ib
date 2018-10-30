@@ -30,6 +30,7 @@ public interface ItemDao {
     void saveItemComments(@Param("items") List<Item> items);
 
     void deleteItemKnowledge(@Param("itemKnowledge") ItemKnowledge itemKnowledge);
+
     void saveItemKnowLedge(@Param("itemKnowledge") ItemKnowledge itemKnowledge);
 
 
@@ -56,6 +57,10 @@ public interface ItemDao {
     List<ItemKnowledge> queryItemKnowledge(@Param("ids") List<Long> ids);
 
     ItemKnowledge getItemKnowledge(@Param("id") long id);
+
+    List<Long> queryItemIdWithKnowledge(@Param("ids") List<Long> ids);
+
+    List<Item> queryItemWithIds(@Param("ids") List<Long> ids);
 
 
 }
