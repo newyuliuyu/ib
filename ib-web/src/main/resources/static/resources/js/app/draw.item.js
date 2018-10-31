@@ -178,6 +178,7 @@
                 var val = "1";
                 if ($(this).hasClass('ez-item')) {
                     val = "1";
+                    $(this).attr("contenteditable",true);
                 } else if ($(this).hasClass('ez-analysis-item')) {
                     val = "2";
                 }

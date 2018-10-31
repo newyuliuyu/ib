@@ -194,7 +194,7 @@
 </script>
 <script id="viewItemT" type="text/x-dot-template">
     {{~it.items:item:index}}
-    <div class="view-item">
+    <div class="view-item" style="background-color:{{? index %2 === 0}}#f0f8ff{{??}}#faebd7{{?}};">
         <div class="ez-vi-item">{{=item.item}}</div>
         <div class="ez-vi-detail">
             <div class="ez-vi-analysis-item">{{=item.analysis||'无'}}</div>

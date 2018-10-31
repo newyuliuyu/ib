@@ -138,7 +138,7 @@
                             }
                             var knowledges = [];
                             var selectedIds = [];
-                            var names=[];
+                            var names = [];
                             $.each(nodes, function (idx, item) {
                                 var k = {};
                                 k.content = item.content;
@@ -167,7 +167,7 @@
                             ajax.postJson(url, itemKnowledge).then(function (dataset) {
                                 dialog.fadedialog({tipText: '保存成功'});
                                 $this.text(names.join(","));
-                                $this.attr('ids',selectedIds.join(','));
+                                $this.attr('ids', selectedIds.join(','));
                                 $dthis.trigger('close');
                             }).always(function () {
                                 $('body').close(arguments[0]);
@@ -179,11 +179,34 @@
                 };
 
 
-                var html = '<div id="ktree" class="ztree"></div>'
+                var html = '<div class="input-group mb-3">' +
+                    '  <input id="knowledgeContents" type="text" class="form-control" placeholder="输入知识点">' +
+                    '  <div class="input-group-append">' +
+                    '    <a class="input-group-text" id="searchKnolwdge" style="cursor: pointer;">查询</a>' +
+                    '  </div>' +
+                    '</div><div id="ktree" class="ztree"></div>'
                 dialog.modal({size: 'md', body: html, footer: footer})
                 var setting = initTreeSetting();
 
                 window.treeObj = $.fn.zTree.init($("#ktree"), setting, knowledges);
+
+                $('#searchKnolwdge').click(function () {
+                    var contents = $('#knowledgeContents').val().trim();
+                    if (!contents || contents === '') {
+                        return;
+                    }
+                    var contentArray = contents.split("|");
+                    $.each(contentArray, function (idx, item) {
+                        item = item.trim();
+                        //console.log(item)
+                        var nodes = treeObj.getNodesByParamFuzzy("name", item, null);
+                        $.each(nodes, function (idx1, item1) {
+                            item1.checked = true;
+                            treeObj.updateNode(item1);
+                            treeObj.expandNode(item1.getParentNode(), true, false, true);
+                        });
+                    });
+                });
 
                 if (ids.length > 0) {
                     $.each(ids, function (idx, item) {
@@ -191,7 +214,7 @@
                         if (node) {
                             node.checked = true;
                             treeObj.updateNode(node);
-                            treeObj.expandNode(node.getParentNode(), true, true, true);
+                            treeObj.expandNode(node.getParentNode(), true, false, true);
                         }
                     });
                 }
