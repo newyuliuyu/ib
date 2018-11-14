@@ -453,6 +453,18 @@ public abstract class XWPFDocumentVisitor<T, O extends Options, E extends IXWPFM
 
     }
 
+    protected boolean isCTEmpty(CTR ctr) {
+        XmlCursor c = ctr.newCursor();
+        c.selectPath("./*");
+        while (c.toNextSelection()) {
+            XmlObject o = c.getObject();
+            if (o instanceof CTEmpty) {
+                return true;
+            }
+
+        }
+        return false;
+    }
 
     protected boolean isCTTExt(CTR ctr) {
         XmlCursor c = ctr.newCursor();
@@ -461,6 +473,22 @@ public abstract class XWPFDocumentVisitor<T, O extends Options, E extends IXWPFM
             XmlObject o = c.getObject();
             if (o instanceof CTText) {
                 return true;
+            } else if (o instanceof CTEmpty) {
+                // Some inline text elements get returned not as
+                // themselves, but as CTEmpty, owing to some odd
+                // definitions around line 5642 of the XSDs
+                // This bit works around it, and replicates the above
+                // rules for that case
+                String tagName = o.getDomNode().getNodeName();
+                if ("w:tab".equals(tagName)) {
+                    return true;
+                }
+                if ("w:br".equals(tagName)) {
+                    return true;
+                }
+                if ("w:cr".equals(tagName)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -483,12 +511,18 @@ public abstract class XWPFDocumentVisitor<T, O extends Options, E extends IXWPFM
     public boolean compareCTTExtStyle(CTR ctr1, CTR ctr2) {
 
         CSSStyle cssStyle1 = getCssStyle(ctr1);
+        if (cssStyle1 == null) {
+            cssStyle1 = new CSSStyle("", "");
+        }
         Map<String, String> c1 = new HashMap<>();
         cssStyle1.getProperties().forEach(a -> {
             c1.put(a.getName(), a.getValue());
         });
 
         CSSStyle cssStyle2 = getCssStyle(ctr2);
+        if (cssStyle2 == null) {
+            cssStyle2 = new CSSStyle("", "");
+        }
         Map<String, String> c2 = new HashMap<>();
         cssStyle2.getProperties().forEach(a -> {
             c2.put(a.getName(), a.getValue());
@@ -555,7 +589,8 @@ public abstract class XWPFDocumentVisitor<T, O extends Options, E extends IXWPFM
             } else if (o instanceof CTEmpty) {
                 String tagName = o.getDomNode().getNodeName();
                 if ("w:tab".equals(tagName)) {
-                    sb.append("    ");
+                    String tmp="          ";
+                    sb.append(tmp);
 //                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
                 }
             }
@@ -610,36 +645,38 @@ public abstract class XWPFDocumentVisitor<T, O extends Options, E extends IXWPFM
 //                CTRPr rPr1 = r.getRPr();
 //                CSSStyle cssStyle1 = ((CSSStylesDocument) getStylesDocument()).createCSSStyle(rPr1);
 
-//                boolean isCTTExt = isCTTExt(r);
-//                if ((isCTTExt && old == null && !isBeforeRun)
-//                        || (isCTTExt && old != null && !isBeforeRun && compareCTTExtStyle(r, old))) {
-//
-//                    String text = getCTTExt(r);
-//                    textsb.append(text);
-//                    old = r;
-//                    continue;
-//
-//                    //System.out.println("是文本:" + getCTTExt(r));
-////                    r.addNewDelText().setStringValue("===123");
-////                    r.addNewDelInstrText().setStringValue("===ABC");
-////                     r.addNewT().setStringValue("====CCCCCC");
-////                    r.getTArray(0).setStringValue("====CCCCCC");
-//                } else {
-//                    Map<String, Object> data = runCTR(r, paragraph, paragraphContainer, fldCharTypeParsing, pageNumber, url, rListAfterSeparate);
-//                    fldCharTypeParsing = (Boolean) data.get("fldCharTypeParsing");
-//                    pageNumber = (Boolean) data.get("pageNumber");
-//                    url = (String) data.get("url");
-//                    rListAfterSeparate = (List<XmlObject>) data.get("rListAfterSeparate");
-//                    isBeforeRun = false;
-//                }
+                boolean isCTTExt = isCTTExt(r);
+                if ((isCTTExt && old == null && !isBeforeRun)
+                        || (isCTTExt && old != null && !isBeforeRun && compareCTTExtStyle(r, old))) {
+
+                    String text = getCTTExt(r);
+                    textsb.append(text);
+                    if (!isCTEmpty(r)) {
+                        old = r;
+                    }
+                    continue;
+
+                    //System.out.println("是文本:" + getCTTExt(r));
+//                    r.addNewDelText().setStringValue("===123");
+//                    r.addNewDelInstrText().setStringValue("===ABC");
+//                     r.addNewT().setStringValue("====CCCCCC");
+//                    r.getTArray(0).setStringValue("====CCCCCC");
+                } else {
+                    Map<String, Object> data = runCTR(r, paragraph, paragraphContainer, fldCharTypeParsing, pageNumber, url, rListAfterSeparate);
+                    fldCharTypeParsing = (Boolean) data.get("fldCharTypeParsing");
+                    pageNumber = (Boolean) data.get("pageNumber");
+                    url = (String) data.get("url");
+                    rListAfterSeparate = (List<XmlObject>) data.get("rListAfterSeparate");
+                    isBeforeRun = false;
+                }
 
 
-                Map<String, Object> data = runCTR(r, paragraph, paragraphContainer, fldCharTypeParsing, pageNumber, url, rListAfterSeparate);
-                fldCharTypeParsing = (Boolean) data.get("fldCharTypeParsing");
-                pageNumber = (Boolean) data.get("pageNumber");
-                url = (String) data.get("url");
-                rListAfterSeparate = (List<XmlObject>) data.get("rListAfterSeparate");
-                isBeforeRun = false;
+//                Map<String, Object> data = runCTR(r, paragraph, paragraphContainer, fldCharTypeParsing, pageNumber, url, rListAfterSeparate);
+//                fldCharTypeParsing = (Boolean) data.get("fldCharTypeParsing");
+//                pageNumber = (Boolean) data.get("pageNumber");
+//                url = (String) data.get("url");
+//                rListAfterSeparate = (List<XmlObject>) data.get("rListAfterSeparate");
+//                isBeforeRun = false;
 
 
 //                CTRImpl d = new CTRImpl(b.schemaType());

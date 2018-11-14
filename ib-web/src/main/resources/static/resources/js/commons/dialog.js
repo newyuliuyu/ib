@@ -24,6 +24,14 @@
                 }
 
 
+                if ($.isPlainObject(settings.dialogStyle)) {
+                    $dialog.css(settings.dialogStyle);
+                }
+                if ($.isPlainObject(settings.dialogBodyStyle)) {
+                    $dialog.find('.dialog-body').css(settings.dialogBodyStyle);
+                }
+
+
                 $dialog.find('.dialog-body').html(settings.body);
                 if (settings.header.show === true) {
                     var $header = $('<div class="dialog-header" style="height: 50px;">\
@@ -424,7 +432,7 @@
                             show: true,
                             buttons: [{
                                 type: 'button',
-                                text: buttonText || "取消",
+                                text: buttonText || "确定",
                                 clazz: 'btn-default myButtonClose',
                                 callback: function () {
                                     $(this).trigger('close');

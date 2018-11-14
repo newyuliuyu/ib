@@ -80,7 +80,7 @@
         }
 
         function showItem(dataset) {
-            //console.log(dataset)
+            console.log(dataset)
             var templateText = $("#itemT").text();
             var arrText = dot.template(templateText);
             var html = arrText(dataset);
@@ -106,15 +106,187 @@
             });
         }
 
+        function setAllItemKnowledgeEvent() {
+
+            $('#setAllItemKnowledge').click(function () {
+                showKnowledgeDialog(function ($theDialog, knowledges) {
+
+                    var selectedIds = [];
+                    var names = [];
+                    $.each(knowledges, function (idx, item) {
+                        selectedIds.push(item.id);
+                        names.push(item.content);
+                    });
+
+                    var itemKnowledges = [];
+                    $('.item-list').each(function () {
+                        var itemKnowledge = {};
+                        itemKnowledge.id = $(this).data('itemid');
+                        itemKnowledge.knowledges = knowledges;
+                        itemKnowledges.push(itemKnowledge);
+                    });
+
+                    var testPaperId = $('body').data('testPaperId');
+                    var url = '/testpaper/update/itemKnowledges/' + testPaperId;
+                    ajax.postJson(url, itemKnowledges).then(function (dataset) {
+                        dialog.fadedialog({tipText: '保存成功'});
+                        $('.item-list').each(function () {
+                            var $knowledgeA = $(this).find('.setting-knowledge');
+                            $knowledgeA.text(names.join(","));
+                            $knowledgeA.attr('ids', selectedIds.join(','));
+                        });
+
+                        $theDialog.trigger('close');
+                    }).always(function () {
+                        $('body').close(arguments[0]);
+                    });
+
+                });
+            });
+        }
+
+
+        function showKnowledgeDialog(clickOkBtnClallBackFun, showDialogCallBackFun) {
+
+            var footer = {
+                buttons: [{
+                    type: 'button',
+                    text: "取消",
+                    clazz: 'btn-default',
+                    callback: function () {
+                        $(this).trigger('close');
+
+                    }
+                }, {
+                    type: 'button',
+                    text: "保存",
+                    clazz: 'btn-primary',
+                    callback: function () {
+                        var nodes = getTreeCheckedNodes();
+                        if (!nodes || nodes.length === 0) {
+                            dialog.fadedialog({tipText: '必须选择至少一个知识点'});
+                            return;
+                        }
+                        var knowledges = [];
+                        $.each(nodes, function (idx, item) {
+                            var k = {};
+                            k.content = item.content;
+                            k.id = item.id;
+                            knowledges.push(k);
+                        });
+
+                        if (clickOkBtnClallBackFun) {
+                            clickOkBtnClallBackFun($(this), knowledges);
+                        }
+                    }
+                }]
+            };
+
+            var html = '<div class="input-group mb-3">' +
+                '  <input id="knowledgeContents" type="text" class="form-control" placeholder="输入知识点">' +
+                '  <div class="input-group-append">' +
+                '    <a class="input-group-text" id="searchKnolwdge" style="cursor: pointer;">查询</a>' +
+                '  </div>' +
+                '</div><div id="ktree" class="ztree"></div>'
+            dialog.modal({size: 'md', body: html, footer: footer})
+            var setting = initTreeSetting();
+            window.treeObj = $.fn.zTree.init($("#ktree"), setting, knowledges);
+
+            $('#searchKnolwdge').click(function () {
+                var contents = $('#knowledgeContents').val().trim();
+                if (!contents || contents === '') {
+                    return;
+                }
+                var contentArray = contents.split("|");
+                $.each(contentArray, function (idx, item) {
+                    item = item.trim();
+                    //console.log(item)
+                    var nodes = treeObj.getNodesByParamFuzzy("name", item, null);
+                    $.each(nodes, function (idx1, item1) {
+                        item1.checked = true;
+                        treeObj.updateNode(item1);
+                        treeObj.expandNode(item1.getParentNode(), true, false, true);
+                    });
+                });
+            });
+
+            if (showDialogCallBackFun) {
+                showDialogCallBackFun(treeObj);
+            }
+
+        }
+
+        function getTreeCheckedNodes() {
+            var treeObj = $.fn.zTree.getZTreeObj("ktree");
+            var nodes = treeObj.getCheckedNodes(true);
+            return nodes;
+        }
+
         function settingKnowledge() {
 
             $('.tabContent_body').on('click', '.setting-knowledge', function () {
-                var $this = $(this);
+                var $knowledgeA = $(this);
                 var ids = [];
-                if ($this.attr('ids')) {
-                    var ids = $(this).attr('ids').split(',');
+                if ($knowledgeA.attr('ids')) {
+                    var ids = $knowledgeA.attr('ids').split(',');
                 }
 
+                showKnowledgeDialog(function ($theDialog, knowledges) {
+                    var selectedIds = [];
+                    var names = [];
+                    $.each(knowledges, function (idx, item) {
+                        selectedIds.push(item.id);
+                        names.push(item.content);
+                    });
+
+                    selectedIds.sort(function (a, b) {
+                        return a - b
+                    });
+                    ids.sort(function (a, b) {
+                        return a - b
+                    });
+                    if (ids.equals(selectedIds)) {
+                        return;
+                    }
+
+                    var itemKnowledge = {};
+                    itemKnowledge.id = $knowledgeA.attr('itemId');
+                    itemKnowledge.knowledges = knowledges;
+
+                    var testPaperId = $('body').data('testPaperId');
+                    var url = '/testpaper/update/itemKnowledge/' + testPaperId;
+                    ajax.postJson(url, itemKnowledge).then(function (dataset) {
+                        dialog.fadedialog({tipText: '保存成功'});
+                        $knowledgeA.text(names.join(","));
+                        $knowledgeA.attr('ids', selectedIds.join(','));
+                        $theDialog.trigger('close');
+                    }).always(function () {
+                        $('body').close(arguments[0]);
+                    });
+
+
+                }, function (treeObj) {
+                    $.each(ids, function (idx, item) {
+                        var node = treeObj.getNodeByParam('id', item);
+                        if (node) {
+                            node.checked = true;
+                            treeObj.updateNode(node);
+                            treeObj.expandNode(node.getParentNode(), true, false, true);
+                        }
+                    });
+                });
+            });
+
+        }
+
+
+        function edititembtnEvent() {
+            $('.tabContent_body').on('click', '.edit-item-btn', function () {
+                var dialogStyle = {'width': '230mm'};
+                var dialogBodyStyle = {'width': '210mm', 'padding': '0px', 'min-height': '100px'};
+                var header = {show: false};
+                var $itemBody = $(this).parents('.item-list').find('.item-body');
+                var itemStemId = $itemBody.attr('itemStemId');
                 var footer = {
                     buttons: [{
                         type: 'button',
@@ -128,96 +300,31 @@
                         text: "保存",
                         clazz: 'btn-primary',
                         callback: function () {
-
-                            var treeObj = $.fn.zTree.getZTreeObj("ktree");
-                            var nodes = treeObj.getCheckedNodes(true);
-
-                            if (!nodes || nodes.length === 0) {
-                                dialog.fadedialog({tipText: '必须选择至少一个知识点'});
-                                return;
-                            }
-                            var knowledges = [];
-                            var selectedIds = [];
-                            var names = [];
-                            $.each(nodes, function (idx, item) {
-                                var k = {};
-                                k.content = item.content;
-                                k.id = item.id;
-                                knowledges.push(k);
-                                selectedIds.push(item.id);
-                                names.push(item.content);
-                            });
-
-                            selectedIds.sort(function (a, b) {
-                                return a - b
-                            });
-                            ids.sort(function (a, b) {
-                                return a - b
-                            });
-                            if (ids.equals(selectedIds)) {
-                                return;
-                            }
-
-                            var itemKnowledge = {};
-                            itemKnowledge.id = $this.attr('itemId');
-                            itemKnowledge.knowledges = knowledges;
-
-                            var $dthis = $(this);
-                            var url = '/item/update/knowledge';
-                            ajax.postJson(url, itemKnowledge).then(function (dataset) {
+                            var $thisDialog = $(this);
+                            var itemStem = {};
+                            itemStem.id = itemStemId;
+                            itemStem.content = $('#itemStemContent').html();
+                            var url = '/item/update/itemstem';
+                            ajax.postJson(url, itemStem).then(function () {
+                                $itemBody.html(itemStem.content);
                                 dialog.fadedialog({tipText: '保存成功'});
-                                $this.text(names.join(","));
-                                $this.attr('ids', selectedIds.join(','));
-                                $dthis.trigger('close');
+                                $thisDialog.trigger('close');
                             }).always(function () {
                                 $('body').close(arguments[0]);
                             });
-
-
                         }
                     }]
                 };
-
-
-                var html = '<div class="input-group mb-3">' +
-                    '  <input id="knowledgeContents" type="text" class="form-control" placeholder="输入知识点">' +
-                    '  <div class="input-group-append">' +
-                    '    <a class="input-group-text" id="searchKnolwdge" style="cursor: pointer;">查询</a>' +
-                    '  </div>' +
-                    '</div><div id="ktree" class="ztree"></div>'
-                dialog.modal({size: 'md', body: html, footer: footer})
-                var setting = initTreeSetting();
-
-                window.treeObj = $.fn.zTree.init($("#ktree"), setting, knowledges);
-
-                $('#searchKnolwdge').click(function () {
-                    var contents = $('#knowledgeContents').val().trim();
-                    if (!contents || contents === '') {
-                        return;
-                    }
-                    var contentArray = contents.split("|");
-                    $.each(contentArray, function (idx, item) {
-                        item = item.trim();
-                        //console.log(item)
-                        var nodes = treeObj.getNodesByParamFuzzy("name", item, null);
-                        $.each(nodes, function (idx1, item1) {
-                            item1.checked = true;
-                            treeObj.updateNode(item1);
-                            treeObj.expandNode(item1.getParentNode(), true, false, true);
-                        });
-                    });
+                var html = $itemBody.html();
+                dialog.modal({
+                    size: 'md',
+                    body: '<div id="itemStemContent" style="width: 205mm;" contenteditable="true">' + html + '</div>',
+                    dialogStyle: dialogStyle,
+                    dialogBodyStyle: dialogBodyStyle,
+                    moveable: false,
+                    header: header,
+                    footer: footer
                 });
-
-                if (ids.length > 0) {
-                    $.each(ids, function (idx, item) {
-                        var node = treeObj.getNodeByParam('id', item);
-                        if (node) {
-                            node.checked = true;
-                            treeObj.updateNode(node);
-                            treeObj.expandNode(node.getParentNode(), true, false, true);
-                        }
-                    });
-                }
             });
         }
 
@@ -226,7 +333,7 @@
             render: function () {
                 $('body').show();
                 var testPaperId = Req.queryString('id');
-                $('body').data('testPaper', testPaperId);
+                $('body').data('testPaperId', testPaperId);
                 var url = '/knowledge/search/' + testPaperId;
                 $('body').loading();
                 ajax.getJson(url).then(function (dataset) {
@@ -247,6 +354,8 @@
                 showItemAnalysis();
                 settingKnowledge();
                 //initKnowledgeTree();
+                edititembtnEvent();
+                setAllItemKnowledgeEvent();
             }
         }
     });

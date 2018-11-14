@@ -1,6 +1,7 @@
 package com.ez.ib.web.service;
 
 import com.ez.ib.web.bean.Knowledge;
+import com.ez.ib.web.bean.KnowledgeContentToId;
 import com.ez.ib.web.bean.KnowledgeSystem;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public interface KnowledgeService {
 
     List<Knowledge> queryKnowledgesWithTestPaperId(long testPaperId);
 
-    List<Knowledge> queryKnowledgesWithContent(List<String> contents);
+    List<KnowledgeContentToId> queryKnowledgesWithContent(List<String> contents);
 
 
 }

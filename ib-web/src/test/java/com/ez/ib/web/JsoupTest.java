@@ -120,6 +120,36 @@ public class JsoupTest {
     }
 
     @Test
+    public void processURLTest() throws Exception{
+        String html = "<p style=\"margin-left:15.6pt;white-space:pre-wrap;\">" +
+                "已知f（x）=alnx+" +
+                "<img src=\"http://192.168.1.145/paper/1060351921598185472/image5.png\" " +
+                "style=\"width:9.75pt;height:26.25pt;\">x" +
+                "<span style=\"font-family:'Calibri';font-size:12.0pt;vertical-align:super;\">2</span>" +
+                "（a＞0），若对任意两个不等的正实数x<span style=\"font-family:'Calibri';" +
+                "font-size:12.0pt;vertical-align:sub;\">1</span>，x<span style=\"font-family:'Calibri';" +
+                "font-size:12.0pt;vertical-align:sub;\">2</span>，都有" +
+                "<img src=\"http://192.168.1.145/paper/1060351921598185472/image6.png\" " +
+                "style=\"width:75.0pt;height:34.5pt;\">＞2恒成立，则a的取值范围是（　　）</p>";
+
+        html = html.replaceAll("http://192.168.1.145/paper","\\${{rootPath}}");
+        Document doc = Jsoup.parse(html);
+
+        Elements elements  = doc.select("img");
+        for(Element e:elements){
+            String src = e.attr("src");
+            e.attr("src","/1060351921598185472/image5.png");
+            System.out.println(src);
+            System.out.println(e.outerHtml());
+        }
+
+
+        System.out.println(doc.body().html());
+
+    }
+
+
+    @Test
     public void parseItem() throws Exception {
         String html = "<div>\n" +
                 " <p style=\"text-align:center;white-space:pre-wrap;\"><span style=\"font-size:17.0pt;font-weight:bold;white-space:pre-wrap;\">平面向量的数量积</span></p>\n" +

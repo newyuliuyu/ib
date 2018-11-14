@@ -3,6 +3,8 @@ package com.ez.ib.web.config;
 
 import com.ez.common.spring.SpringContextUtil;
 import com.ez.common.util.IdGenerator;
+import com.ez.ib.web.bean.EzConfig;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -29,6 +31,12 @@ public class CommonConfig {
     @Bean
     public IdGenerator idGenerator() {
         return new IdGenerator();
+    }
+
+    @Bean
+    @ConfigurationProperties("ez")
+    public EzConfig ezConfig() {
+        return new EzConfig();
     }
 
 }

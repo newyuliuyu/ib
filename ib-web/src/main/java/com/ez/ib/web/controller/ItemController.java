@@ -3,6 +3,7 @@ package com.ez.ib.web.controller;
 import com.ez.common.mvc.ModelAndViewFactory;
 import com.ez.ib.web.bean.Item;
 import com.ez.ib.web.bean.ItemKnowledge;
+import com.ez.ib.web.bean.ItemStem;
 import com.ez.ib.web.service.ItemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,15 @@ public class ItemController {
                                             HttpServletResponse res) throws Exception {
         log.debug("updateItemKnowledge controller...");
         itemService.udpateItemKnowledge(itemKnowledge);
+        return ModelAndViewFactory.instance().build();
+    }
+
+    @RequestMapping(value = "/update/itemstem")
+    public ModelAndView updateItemItemStem(@RequestBody ItemStem itemStem,
+                                           HttpServletRequest req,
+                                           HttpServletResponse res) throws Exception {
+        log.debug("updateItemKnowledge controller...");
+        itemService.updateItemItemStem(itemStem);
         return ModelAndViewFactory.instance().build();
     }
 }

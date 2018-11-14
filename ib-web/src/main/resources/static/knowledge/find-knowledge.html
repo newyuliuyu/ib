@@ -87,20 +87,16 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">知识点</th>
-            <th scope="col">ID</th>
+            <th scope="col">ID&nbsp;<a href="javascript:void(0);" id="copyKnowledgeIds">(复制ID)</a></th>
         </tr>
         </thead>
         <tbody>
-        {{~it.knowledges:item:index}}
-        <tr {{? item.id==="0" }} style="background-color:#ea9e9e;" {{?}}>
+        {{~it.knowledgeContentToIds:item:index}}
+        <tr {{? item.hasNotFind }} style="background-color:#ea9e9e;" {{?}}>
             <th scope="row">{{=index+1}}</th>
-            <td>{{=item.content}}</td>
+            <td>{{=item.contents}}</td>
             <td>
-                {{? item.id==="0"}}
-                    没有查询到该知识点
-                {{??}}
-                    {{=item.id}}
-                {{?}}
+                {{=item.ids}}
             </td>
         </tr>
         {{~}}

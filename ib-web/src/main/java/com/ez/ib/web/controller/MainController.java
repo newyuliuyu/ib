@@ -23,9 +23,14 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 public class MainController {
 
-    @RequestMapping("/index")
-    public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    @RequestMapping("/index2")
+    public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return ModelAndViewFactory.instance("index").build();
+    }
+
+    @RequestMapping("/")
+    public ModelAndView index2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return ModelAndViewFactory.instance("redirect:/index.html").build();
     }
 
 }

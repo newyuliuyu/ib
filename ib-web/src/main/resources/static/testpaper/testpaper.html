@@ -32,7 +32,7 @@
         <a class="easy_logoImg"><img
                 src="../resources/images/ez/logo.png" alt="logo"></a>
         <ul class="easy_nav fl">
-            <li><a class="" href="javascript:;"><span>【题库入库】</span></a></li>
+            <li><a class="" href="javascript:;"><span>【试卷管理】</span></a></li>
         </ul>
     </div>
 </div>
@@ -43,7 +43,7 @@
         <div class="container">
 
             <div class="tabTit" name="tabTit"
-                 style="height: 50px;border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
+                 style="border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
                 <div class="row">
                     <div class="col-sm-2">
                         <select id="learnSegment" class="form-control">
@@ -56,8 +56,29 @@
                             <option>选择科目</option>
                         </select>
                     </div>
+                    <div class="col-sm-2">
+                        <select id="showRelationKnowledgeState" class="form-control">
+                            <option value="0">显示所有题目</option>
+                            <option value="1">只显示题目关联了知识点</option>
+                            <option value="2">只显示题目未关联知识点</option>
+                        </select>
+                    </div>
 
-                    <div class="input-group col-sm-5">
+                    <div class="input-group col-sm-5 mytime">
+                        时间: <input type="text" id="beginDate" name="beginDate" value=""
+                                   class="form-control form_datetime" readonly
+                                   style="background-color: #fff; cursor: pointer;"><span
+                            class="glyphicon glyphicon-calendar"></span>到&nbsp;&nbsp; <input
+                            type="text" id="endDate" name="endDate" value=""
+                            class="form-control form_datetime" readonly
+                            style="background-color: #fff; cursor: pointer;"><span
+                            class="glyphicon glyphicon-calendar"></span>
+                    </div>
+
+
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="input-group col-sm-4">
                         <input type="text" id="name" class="form-control" placeholder="输入搜索的考试名称"
                                aria-describedby="basic-addon2">
                         <div class="input-group-append">

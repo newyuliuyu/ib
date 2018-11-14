@@ -2,6 +2,8 @@ package com.ez.ib.web.bean;
 
 import lombok.*;
 
+import java.util.Date;
+
 /**
  * ClassName: PaperTest <br/>
  * Function:  ADD FUNCTION. <br/>
@@ -25,4 +27,16 @@ public class TestPaper {
     private Subject subject;
     private LearnSegment learnSegment;
     private KnowledgeSystem knowledgeSystem;
+    private Long timestamp = 0L;
+    private TestPaperAttr testPaperAttr;
+
+    public void setCreateDate(Date date) {
+        this.timestamp = date.getTime();
+    }
+
+    public Date getCreateDate() {
+        return new Date(timestamp);
+    }
+
+
 }

@@ -19,19 +19,25 @@ import java.util.List;
 @Repository
 public interface ItemDao {
 
-    void saveItems(@Param("items") List<Item> items);
+    int saveItems(@Param("items") List<Item> items);
 
-    void saveItemStems(@Param("items") List<Item> items);
+    int saveItemStems(@Param("items") List<Item> items);
 
-    void saveItemAnalysis(@Param("items") List<Item> items);
+    int saveItemAnalysis(@Param("items") List<Item> items);
 
-    void saveItemAnswers(@Param("items") List<Item> items);
+    int saveItemAnswers(@Param("items") List<Item> items);
 
-    void saveItemComments(@Param("items") List<Item> items);
+    int saveItemComments(@Param("items") List<Item> items);
 
-    void deleteItemKnowledge(@Param("itemKnowledge") ItemKnowledge itemKnowledge);
+    int updateItemItemStem(@Param("itemStem") ItemStem itemStem);
 
-    void saveItemKnowLedge(@Param("itemKnowledge") ItemKnowledge itemKnowledge);
+    int saveItemKnowLedge(@Param("itemKnowledge") ItemKnowledge itemKnowledge);
+
+    int saveItemKnowLedges(@Param("itemKnowledges") List<ItemKnowledge> itemKnowledges);
+
+    int deleteItemKnowledge(@Param("itemKnowledge") ItemKnowledge itemKnowledge);
+
+    int deleteItemKnowledges(@Param("itemKnowledges") List<ItemKnowledge> itemKnowledges);
 
 
     List<Item> queryItemWithTestPaper(@Param("testPaperId") long testPaperId);

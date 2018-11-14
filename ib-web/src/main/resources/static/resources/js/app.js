@@ -88,7 +88,9 @@ var config = {
         'loading': 'js/commons/JQuery.loading',
         'icheck': 'js/lib/icheck.min',
         'pager': 'js/lib/jquery.pager',
-        'ztree': 'js/lib/jquery.ztree.all'
+        'ztree': 'js/lib/jquery.ztree.all',
+        'datetimepicker': 'js/lib/bootstrap-datetimepicker',
+        'copyutils': 'js/lib/clipboard.min'
 
     },
     map: {
@@ -115,6 +117,9 @@ var config = {
         },
         'ztree': {
             deps: ['jquery','css!style/zTreeStyle']
+        },
+        'datetimepicker': {
+            deps: ['bootstrap','css!style/bootstrap-datetimepicker']
         }
     }
 };

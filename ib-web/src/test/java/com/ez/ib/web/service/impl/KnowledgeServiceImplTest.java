@@ -2,7 +2,7 @@ package com.ez.ib.web.service.impl;
 
 import com.ez.common.json.Json2;
 import com.ez.ib.web.IbWebApplication;
-import com.ez.ib.web.bean.Knowledge;
+import com.ez.ib.web.bean.KnowledgeContentToId;
 import com.ez.ib.web.service.KnowledgeService;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
@@ -47,18 +47,12 @@ public class KnowledgeServiceImplTest {
         contents.add("集合的包含关系");
         contents.add("倒数几何意义的应用");
         contents.add("导数的综合应用");
-        contents.add("利用定积分计算平面图形的面积");
-        contents.add("求函数的单调区间");
-        contents.add("函数零点的个数");
-        contents.add("导数集合意义的应用、函数图像的应用");
-        contents.add("集合的包含关系");
-        contents.add("含逻辑连接词的命题真假判断");
-        contents.add("构建函数模型解决实际问题");
+        contents.add("导数的综合应用|利用定积分计算平面图形的面积|求函数的单调区间|函数零点的个数|导数几何意义的应用|函数图像的应用");
         contents.add("利用函数研究导数的极值、最值——利用导数求函数的极值问题");
         contents.add("倒数几何意义的应用");
         contents.add("导数的综合应用");
 
-        List<Knowledge> knowledges = knowledgeService.queryKnowledgesWithContent(contents);
+        List<KnowledgeContentToId> KnowledgeContentToIds = knowledgeService.queryKnowledgesWithContent(contents);
 
 //        for(Knowledge knowledge : knowledges){
 //            String json = Json2.toJson(knowledge);
@@ -71,7 +65,7 @@ public class KnowledgeServiceImplTest {
 //            knowledges1.add(Knowledge.builder().id(c.getId()).content(c.getContent()).build());
 //        }
 
-        String json = Json2.toJson(knowledges);
+        String json = Json2.toJson(KnowledgeContentToIds);
         System.out.println(json);
 
     }

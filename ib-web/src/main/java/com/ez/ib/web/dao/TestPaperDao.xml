@@ -3,8 +3,12 @@
 <mapper namespace="com.ez.ib.web.dao.TestPaperDao">
 
     <insert id="newTestPaper">
-		insert into ib_test_paper(id,name,subject,learnSegment)
-		values(#{testPaper.id},#{testPaper.name},#{testPaper.subject.id},#{testPaper.learnSegment.id})
+		insert into ib_test_paper(id,name,subject,learnSegment,timestamp)
+		values(#{testPaper.id},#{testPaper.name},#{testPaper.subject.id},#{testPaper.learnSegment.id},#{testPaper.timestamp})
+	</insert>
+    <insert id="saveTestPaperAttr">
+		INSERT INTO ib_test_paper_attr(testpaperId,itemNum,relationKnowledgeNum)
+		values(#{testPaperAttr.testPaperId},#{testPaperAttr.itemNum},#{testPaperAttr.relationKnowledgeNum})
 	</insert>
 
     <insert id="saveTestPaperItem">
@@ -20,10 +24,75 @@
         set a.knowledgeSys=#{knowledgeSystemId}
         where a.id=${testPaperId}
     </update>
+    <update id="updateTestPaperItemRelationKnowledgeNumAutomaticGrowth">
+        update ib_test_paper_attr a
+        set a.relationKnowledgeNum=relationKnowledgeNum+1
+        where a.testPaperId=${testPaperId}
+    </update>
+    <update id="updateTestPaperItemRelationKnowledgeNum">
+        update ib_test_paper_attr a
+        set a.relationKnowledgeNum=#{relationKnowledgeNum}
+        where a.testPaperId=${testPaperId}
+    </update>
+
+    <delete id="deleteTestPaperItemItemstem">
+        DELETE b FROM ib_item a,ib_item_stem b,ib_test_paper_item c
+        WHERE a.stem=b.id
+        AND a.id=c.itemId
+        AND c.testPaperId= #{testPaperId}
+    </delete>
+    <delete id="deleteTestPaperItemItemanalysis">
+        DELETE b FROM ib_item a,ib_item_analysis b,ib_test_paper_item c
+        WHERE a.analysisId=b.id
+        AND a.id=c.itemId
+        AND c.testPaperId=#{testPaperId}
+    </delete>
+    <delete id="deleteTestPaperItemItemanswer">
+        DELETE b FROM ib_item a,ib_item_answer b,ib_test_paper_item c
+        WHERE a.answerId=b.id
+        AND a.id=c.itemId
+        AND c.testPaperId= #{testPaperId}
+    </delete>
+    <delete id="deleteTestPaperItemItemcomment">
+      DELETE b FROM ib_item a,ib_item_comment b,ib_test_paper_item c
+      WHERE a.commentId=b.id
+      AND a.id=c.itemId
+      AND c.testPaperId= #{testPaperId}
+    </delete>
+    <delete id="deleteTestPaperItemItemknoledge">
+        DELETE b FROM ib_item a,ib_item_x_knoledge b,ib_test_paper_item c
+        WHERE a.id=b.itemId
+        AND a.id=c.itemId
+        AND c.testPaperId=#{testPaperId}
+    </delete>
+    <delete id="deleteTestPaperItemItem">
+        DELETE a FROM ib_item a,ib_test_paper_item c
+        WHERE a.id=c.itemId
+        AND c.testPaperId=#{testPaperId}
+    </delete>
+    <delete id="deleteTestPaperItem">
+      DELETE c FROM ib_test_paper_item c
+      WHERE  c.testPaperId= #{testPaperId}
+    </delete>
+
+    <delete id="deleteTestPaperAttr">
+      DELETE c FROM ib_test_paper_attr c
+      WHERE  c.testPaperId=#{testPaperId}
+    </delete>
+    <delete id="deleteTestPaper">
+      DELETE c FROM ib_test_paper c
+      WHERE  c.id=#{testPaperId}
+    </delete>
 
     <resultMap id="myTestPaper" type="com.ez.ib.web.bean.TestPaper">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
+        <result property="timestamp" column="timestamp"/>
+        <association property="testPaperAttr" javaType="com.ez.ib.web.bean.TestPaperAttr">
+            <id property="testPaperId" column="id"/>
+            <result property="itemNum" column="itemNum"/>
+            <result property="relationKnowledgeNum" column="relationKnowledgeNum"/>
+        </association>
         <association property="subject" javaType="com.ez.ib.web.bean.Subject">
             <id property="id" column="subjectId"/>
             <result property="name" column="subjectName"/>
@@ -42,6 +111,9 @@
         SELECT
         a.id,
         a.name,
+        a.timestamp,
+        e.itemNum,
+        e.relationKnowledgeNum,
         b.id AS subjectId,
         b.name AS subjectName,
         c.id AS learnSegmentId,
@@ -49,6 +121,7 @@
         d.id as knowledgeSysId,
         d.name as knowledgeSysName
         FROM ib_test_paper a
+        INNER JOIN ib_test_paper_attr e ON a.id=e.testPaperId
         INNER JOIN ib_subject b ON a.subject=b.id
         INNER JOIN ib_learn_segment c ON a.learnSegment=c.id
         LEFT JOIN ib_knowledge_system d on a.knowledgeSys=d.id
@@ -62,12 +135,26 @@
             <if test="name != null">
                 AND a.name like #{name}
             </if>
+            <if test="beginTimestamp>0 and endTimestamp>0">
+                AND a.timestamp >= #{beginTimestamp} AND a.timestamp &lt;= #{endTimestamp}
+            </if>
+            <choose>
+                <when test="showRelationKnowledgeState==1">
+                    AND e.itemNum=e.relationKnowledgeNum
+                </when>
+                <when test="showRelationKnowledgeState==2">
+                    AND e.itemNum>e.relationKnowledgeNum
+                </when>
+            </choose>
         </where>
+        order by a.timestamp desc
     </select>
     <select id="get" resultMap="myTestPaper">
         SELECT
         a.id,
         a.name,
+        e.itemNum,
+        e.relationKnowledgeNum,
         b.id AS subjectId,
         b.name AS subjectName,
         c.id AS learnSegmentId,
@@ -75,6 +162,7 @@
         d.id as knowledgeSysId,
         d.name as knowledgeSysName
         FROM ib_test_paper a
+        INNER JOIN ib_test_paper_attr e ON a.id=e.testPaperId
         INNER JOIN ib_subject b ON a.subject=b.id
         INNER JOIN ib_learn_segment c ON a.learnSegment=c.id
         LEFT JOIN ib_knowledge_system d on a.knowledgeSys=d.id

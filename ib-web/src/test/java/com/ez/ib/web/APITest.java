@@ -1,11 +1,13 @@
 package com.ez.ib.web;
 
+import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -85,5 +87,26 @@ public class APITest {
     public void test() throws Exception {
         C c = new C();
         c.print();
+    }
+    @Test
+    public void test2() throws Exception {
+       List<String> test = Lists.newArrayList("a","b","c","d");
+        Iterator<String> it = test.iterator();
+        while (it.hasNext()){
+            String k = it.next();
+            if(k.equals("b")){
+                it.remove();
+            }
+        }
+
+        System.out.println();
+    }
+
+    @Test
+    public void kk() {
+        String abcd="测试＝＝＝＝大饭店飞度";
+        String test1 = abcd.replaceAll("测试","\\$\\{\\{rootPath\\}\\}");
+        String test2 = test1.replaceAll("\\$\\{\\{rootPath\\}\\}","yingwen");
+        System.out.println();
     }
 }

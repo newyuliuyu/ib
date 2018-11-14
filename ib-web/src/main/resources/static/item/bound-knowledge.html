@@ -32,7 +32,7 @@
         <a class="easy_logoImg"><img
                 src="../resources/images/ez/logo.png" alt="logo"></a>
         <ul class="easy_nav fl">
-            <li><a class="" href="javascript:;"><span>【题库入库】</span></a></li>
+            <li><a class="" href="javascript:;"><span>【设置题目知识点】</span></a></li>
         </ul>
     </div>
 </div>
@@ -52,10 +52,16 @@
             <!--</div>-->
             <div id="mm" class="tabTit" name="tabTit"
                  style="height: 50px;border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
+                <button type="button" id="setAllItemKnowledge"
+                        class="float-right btn btn-outline-primary" style="margin:10px;">
+                    设置所有题目知识点相同
+                </button>
             </div>
 
             <div class="tabContent" name="tabCon">
-                <!--<div class="tabContent_header"></div>-->
+                <div class="tabContent_header">
+
+                </div>
                 <!--<div style="overflow:auto;border: 1px solid;width: 200px;height: 300px;float: right;position: fixed;left: 200px;">-->
                 <!--<div id="knowledgeTree" class="ztree">-->
                 <!--</div>-->
@@ -94,12 +100,13 @@
             {{?}}
 
         </div>
-        <div class="item-body">
+        <div class="item-body" itemStemId="{{=item.itemStem.id}}">
             <!--题干-->
             {{=item.itemStem.content}}
         </div>
         <div class="item-footer">
             <span>&nbsp;</span>
+            <a class="float-right edit-item-btn" style="cursor: pointer;">编辑题目</a>
             <a class="float-right item-analysis-btn">解析</a>
 
         </div>

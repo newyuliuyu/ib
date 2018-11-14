@@ -8,6 +8,7 @@ import fr.opensagres.poi.xwpf.converter.core.styles.run.RunTextHighlightingValue
 import fr.opensagres.poi.xwpf.converter.core.utils.DxaUtil;
 import fr.opensagres.poi.xwpf.converter.core.utils.StringUtils;
 import fr.opensagres.poi.xwpf.converter.xhtml.XHTMLOptions;
+import fr.opensagres.poi.xwpf.converter.xhtml.internal.styles.CSSProperty;
 import fr.opensagres.poi.xwpf.converter.xhtml.internal.styles.CSSStyle;
 import fr.opensagres.poi.xwpf.converter.xhtml.internal.styles.CSSStylePropertyConstants;
 import fr.opensagres.poi.xwpf.converter.xhtml.internal.styles.CSSStylesDocument;
@@ -27,6 +28,7 @@ import org.xml.sax.helpers.AttributesImpl;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.Iterator;
 import java.util.List;
 
 import static fr.opensagres.poi.xwpf.converter.core.utils.DxaUtil.emu2points;
@@ -193,7 +195,16 @@ public class XHTMLMapper
         CTRPr rPr = run.getCTR().getRPr();
         CSSStyle cssStyle = getStylesDocument().createCSSStyle(rPr);
         if (cssStyle != null) {
-            cssStyle.addProperty(CSSStylePropertyConstants.WHITE_SPACE, "pre-wrap");
+            Iterator<CSSProperty> it = cssStyle.getProperties().iterator();
+            while (it.hasNext()){
+                CSSProperty cssProperty = it.next();
+                if(cssProperty.getName().equalsIgnoreCase("font-size")
+                || cssProperty.getName().equalsIgnoreCase("font-family")){
+                    it.remove();
+                }
+            }
+
+//            cssStyle.addProperty(CSSStylePropertyConstants.WHITE_SPACE, "pre-wrap");
         }
         this.currentRunAttributes = createStyleAttribute(cssStyle, currentRunAttributes);
 

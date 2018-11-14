@@ -15,7 +15,8 @@
         'css!style/font-awesome',
         'css!style/public',
         'loading',
-        'icheck'
+        'icheck',
+        'datetimepicker'
     ];
     define(models, function ($, ajax, WebUploader, dot, UI, dialog) {
 
@@ -37,6 +38,32 @@
             }
             if ($.isPlainObject(page)) {
                 url += '&pageNum=' + page.pageNum + "&pageSize=" + page.pageSize;
+            }
+            var showRelationKnowledgeState=$('#showRelationKnowledgeState').val();
+            if(showRelationKnowledgeState !=="0"){
+                url += '&showRelationKnowledgeState=' + showRelationKnowledgeState;
+            }
+
+            var beginDate = $('#beginDate').val();
+            var endDate = $('#endDate').val();
+
+            if (beginDate !== '' && endDate === '') {
+                dialog.alter('<span class="text-danger">结束时间不能为空</span>');
+                return;
+            }
+            if (beginDate === '' && endDate !== '') {
+                dialog.alter('<span class="text-danger">开始时间不能为空</span>');
+                return;
+            }
+            var date1 = new Date(beginDate);
+            var date2 = new Date(endDate)
+            if (date2 - date1 < 0) {
+                dialog.alter('<span class="text-danger">开始时间必须小于结束时间</span>');
+                return;
+            }
+
+            if (beginDate !== '' && endDate !== '') {
+                url += '&beginDate=' + beginDate + "&endDate=" + endDate;
             }
 
             ajax.getHTML(url).then(function (html) {
@@ -69,10 +96,12 @@
             $('#searchName').click(function () {
                 searchTestPaper();
             });
-            $('#subject,#learnSegment').change(function () {
+            $('#subject,#learnSegment,#showRelationKnowledgeState').change(function () {
                 searchTestPaper();
             })
+
         }
+
 
 
         function updateTestPaperKnowledgeSystem($a, testPaper) {
@@ -81,6 +110,7 @@
                 $a.text(testPaper.knowledgeSystem.name);
                 $a.attr('ksid', testPaper.knowledgeSystem.id);
                 dialog.fadedialog({tipText: '保存试卷【' + testPaper.name + '】知识体系成功'});
+                $a.parents('tr').find('#showBoundKnowledgeBtn').show();
             }).always(function () {
                 $('body').close(arguments[0]);
             });
@@ -143,11 +173,45 @@
             });
         }
 
+        function deleteTestPaperBtnEvent() {
+
+            $('.tabContent_body').on('click', '.del-testpaper', function () {
+                var testPaperId = $(this).attr("testpaperid");
+                dialog.confirm("删除试卷", "<span class='text-danger'>删除试卷同时也删除试卷关联的所有题目.<br/>你确定要删除吗？</span>", function () {
+                    deleteTestPaper(testPaperId)
+                }, "确定");
+            });
+        }
+
+        function clickCurPage(){
+            $('#pager').clickCurPage();
+        }
+        function deleteTestPaper(testpaperId) {
+            var url = '/testpaper/del';
+            console.log(testpaperId)
+            ajax.postJson(url, testpaperId).then(function (dataset) {
+                dialog.fadedialog({tipText: '<span class="text-success">保存成功</span>'});
+                clickCurPage();
+            }).always(function () {
+                $('body').close(arguments[0]);
+            });
+        }
+
+
+
         return {
             render: function () {
                 $('body').show();
+                // var date = new Date().format("yyyy-MM-dd");
+                $('.form_datetime').datetimepicker({
+                    format: "yyyy-mm-dd",
+                    minView: 2,
+                    autoclose: 1,
+                    todayBtn: 1
+                });
                 initLearnSegmentAndSubject();
                 initSettingKnowledgeSystemEvent();
+                deleteTestPaperBtnEvent();
             }
         }
     });

@@ -4,11 +4,12 @@ import com.ez.common.mvc.ModelAndViewFactory;
 import com.ez.common.spring.SpringContextUtil;
 import com.ez.common.util.FileUtil;
 import com.ez.common.util.IdGenerator;
+import com.ez.ib.web.bean.EzConfig;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,14 +39,17 @@ import java.util.Map;
 @Slf4j
 @Controller
 public class UploadFileController {
-    @Value("${upload.file.dir:''}")
-    private String uploadFileDir;
+//    @Value("${upload.file.dir:''}")
+//    private String uploadFileDir;
+
+    @Autowired
+    private EzConfig ezConfig;
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public ModelAndView upload(HttpServletRequest request, HttpServletResponse responese) throws Exception {
         log.debug("file upload");
 
-        Path dirPath = checkAndCreateUploadFileDir(uploadFileDir);
+        Path dirPath = checkAndCreateUploadFileDir(ezConfig.getUploadFileDir());
 
         IdGenerator idGenerator = SpringContextUtil.getBean("idGenerator");
         List<Map<String, String>> filesMap = Lists.newArrayList();

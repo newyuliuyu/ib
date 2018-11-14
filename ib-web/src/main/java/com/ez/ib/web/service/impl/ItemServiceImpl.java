@@ -1,9 +1,12 @@
 package com.ez.ib.web.service.impl;
 
+import com.ez.ib.web.bean.EzConfig;
 import com.ez.ib.web.bean.Item;
 import com.ez.ib.web.bean.ItemKnowledge;
+import com.ez.ib.web.bean.ItemStem;
 import com.ez.ib.web.dao.*;
 import com.ez.ib.web.service.ItemService;
+import com.ez.ib.web.utils.ItemUtils;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,19 +40,29 @@ public class ItemServiceImpl implements ItemService {
     private LearnSegmentDao learnSegmentDao;
     @Autowired
     private TestPaperDao testPaperDao;
+    @Autowired
+    private EzConfig ezConfig;
+
 
     @Override
     @Transactional
     public void udpateItemKnowledge(ItemKnowledge itemKnowledge) {
         Assert.isTrue(itemKnowledge.getKnowledges() != null && !itemKnowledge.getKnowledges().isEmpty(), "保存題目知识点不能没有知识点");
-        itemDao.deleteItemKnowledge(itemKnowledge);
+        int deleteItemKnowledgeNum = itemDao.deleteItemKnowledge(itemKnowledge);
         itemDao.saveItemKnowLedge(itemKnowledge);
+    }
+
+    @Override
+    public void updateItemItemStem(ItemStem itemStem) {
+        ItemUtils.deleteHTMLRootPath(itemStem, ezConfig.getHtmlImageRootPath());
+        itemDao.updateItemItemStem(itemStem);
     }
 
     @Override
     public List<Item> queryItemWithTestPaper(long testPaperId) {
         List<Item> items = itemDao.queryItemWithTestPaper(testPaperId);
         setItemAttr(items);
+        ItemUtils.solveHTMLRootPath(items, ezConfig.getHtmlImageRootPath());
         return items;
     }
 
@@ -62,6 +75,8 @@ public class ItemServiceImpl implements ItemService {
             items = itemDao.queryItemWithIds(itemIds);
             setItemAttr(items);
         }
+
+        ItemUtils.solveHTMLRootPath(items, ezConfig.getHtmlImageRootPath());
         return items;
     }
 
@@ -74,7 +89,6 @@ public class ItemServiceImpl implements ItemService {
             item.setComment(itemAttrs.itemComment(item.getComment()));
             item.setSubject(itemAttrs.subject(item.getSubject()));
             item.setLearnSegment(itemAttrs.learnSegment(item.getLearnSegment()));
-
             item.setItemKnowledge(itemAttrs.itemKnowledge(ItemKnowledge.builder().id(item.getId()).build()));
         });
     }

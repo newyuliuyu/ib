@@ -1,5 +1,6 @@
 package com.ez.ib.web.service;
 
+import com.ez.ib.web.bean.ItemKnowledge;
 import com.ez.ib.web.bean.TestPaper;
 import com.ez.ib.web.bean.TestPaperItem;
 
@@ -20,9 +21,18 @@ public interface TestPaperService {
 
     List<TestPaper> queryTestPapers(long subjectId,
                                     long learnSegmentId,
-                                    String name);
+                                    String name,
+                                    long beginTimestamp,
+                                    long endTimestamp,
+                                    int showRelationKnowledgeState);
 
     void savetestPaperItem(TestPaperItem testPaperItem);
 
     void updateTestPaperKnowledgeSystem(TestPaper testPaper);
+
+    void updateItemKnowledge(long testPaperId, ItemKnowledge itemKnowledge);
+
+    void udpateTestPaperItemKnowledges(long testPaperId, List<ItemKnowledge> itemKnowledges);
+
+    void deleteTestPaper(long testpaperId);
 }

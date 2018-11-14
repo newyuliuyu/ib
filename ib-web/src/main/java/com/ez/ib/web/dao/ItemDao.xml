@@ -42,10 +42,6 @@
         </foreach>
     </insert>
 
-    <delete id="deleteItemKnowledge">
-        delete from ib_item_x_knoledge where itemId=#{itemKnowledge.id}
-    </delete>
-
     <insert id="saveItemKnowLedge">
         INSERT INTO ib_item_x_knoledge(itemId,knowledgeId)
         VALUES
@@ -53,6 +49,31 @@
             (#{itemKnowledge.id},#{item.id})
         </foreach>
     </insert>
+    <insert id="saveItemKnowLedges">
+        INSERT INTO ib_item_x_knoledge(itemId,knowledgeId)
+        VALUES
+        <foreach collection="itemKnowledges" item="item" index="index" separator=",">
+            <foreach collection="item.knowledges" item="item2" index="index" separator=",">
+                (#{item.id},#{item2.id})
+            </foreach>
+        </foreach>
+    </insert>
+
+    <update id="updateItemItemStem">
+        update ib_item_stem a set a.content=#{itemStem.content}
+        where a.id=#{itemStem.id}
+    </update>
+
+    <delete id="deleteItemKnowledge">
+        delete from ib_item_x_knoledge where itemId=#{itemKnowledge.id}
+    </delete>
+    <delete id="deleteItemKnowledges">
+        delete from ib_item_x_knoledge
+        where itemId in
+        <foreach collection="itemKnowledges" item="item" index="index" separator="," open="(" close=")">
+            #{item.id}
+        </foreach>
+    </delete>
 
 
     <resultMap id="myItem" type="com.ez.ib.web.bean.Item">

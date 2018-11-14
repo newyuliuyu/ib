@@ -1,6 +1,7 @@
 package com.ez.ib.web.dao;
 
 import com.ez.ib.web.bean.TestPaper;
+import com.ez.ib.web.bean.TestPaperAttr;
 import com.ez.ib.web.bean.TestPaperItem;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,8 @@ import java.util.List;
 public interface TestPaperDao {
     void newTestPaper(@Param("testPaper") TestPaper testPaper);
 
+    void saveTestPaperAttr(@Param("testPaperAttr") TestPaperAttr testPaperAttr);
+
     void saveTestPaperItem(@Param("testPaperItem") TestPaperItem testPaperItem);
 
 
@@ -28,8 +31,34 @@ public interface TestPaperDao {
 
     List<TestPaper> queryTestPapers(@Param("subjectId") long subjectId,
                                     @Param("learnSegmentId") long learnSegmentId,
-                                    @Param("name") String name);
+                                    @Param("name") String name,
+                                    @Param("beginTimestamp") long beginTimestamp,
+                                    @Param("endTimestamp") long endTimestamp,
+                                    @Param("showRelationKnowledgeState") int showRelationKnowledgeState);
 
-    void updateTestPaperKnowledgeSystem(@Param("testPaperId") long testPaperId,
-                                        @Param("knowledgeSystemId") long knowledgeSystemId);
+    int updateTestPaperKnowledgeSystem(@Param("testPaperId") long testPaperId,
+                                       @Param("knowledgeSystemId") long knowledgeSystemId);
+
+    int updateTestPaperItemRelationKnowledgeNumAutomaticGrowth(@Param("testPaperId") long testPaperId);
+
+    int updateTestPaperItemRelationKnowledgeNum(@Param("testPaperId") long testPaperId,
+                                                @Param("relationKnowledgeNum") int relationKnowledgeNum);
+
+    int deleteTestPaperItemItemstem(@Param("testPaperId") long testPaperId);
+
+    int deleteTestPaperItemItemanalysis(@Param("testPaperId") long testPaperId);
+
+    int deleteTestPaperItemItemanswer(@Param("testPaperId") long testPaperId);
+
+    int deleteTestPaperItemItemcomment(@Param("testPaperId") long testPaperId);
+
+    int deleteTestPaperItemItemknoledge(@Param("testPaperId") long testPaperId);
+
+    int deleteTestPaperItemItem(@Param("testPaperId") long testPaperId);
+
+    int deleteTestPaperItem(@Param("testPaperId") long testPaperId);
+
+    int deleteTestPaperAttr(@Param("testPaperId") long testPaperId);
+
+    int deleteTestPaper(@Param("testPaperId") long testPaperId);
 }

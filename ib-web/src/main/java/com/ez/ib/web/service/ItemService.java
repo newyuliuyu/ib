@@ -2,6 +2,7 @@ package com.ez.ib.web.service;
 
 import com.ez.ib.web.bean.Item;
 import com.ez.ib.web.bean.ItemKnowledge;
+import com.ez.ib.web.bean.ItemStem;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ import java.util.List;
 public interface ItemService {
 
     void udpateItemKnowledge(ItemKnowledge itemKnowledge);
+
+    void updateItemItemStem(ItemStem itemStem);
 
     List<Item> queryItemWithTestPaper(long testPaperId);
 

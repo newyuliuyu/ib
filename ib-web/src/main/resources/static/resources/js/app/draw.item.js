@@ -102,10 +102,12 @@
         function fetchItem() {
             $('body').loading();
             var docxname = "";
+            var oldDocxName = "";
             $('#docxPapers>div').each(function (idx, item) {
                 var oldfile = $(item).attr('old');
                 var newfile = $(item).attr('new');
                 docxname = newfile;
+                oldDocxName = oldfile;
             });
 
             var url = "/fetch/docx/paper/item?wordname=" + docxname;
@@ -114,6 +116,7 @@
                 myDialog.find('.dialog-footer > button').click();
 
                 localStorage['ezitemhtml'] = dataset.html;
+                localStorage['docxName'] = oldDocxName;
 
                 //$('.tabContent_body').html(dataset.html);
                 UIshowItem();
@@ -175,10 +178,10 @@
             $('.tabContent_body').on('click', '.ez-item,.ez-analysis-item,.ez-answer-item,.ez-review-item', function (event) {
                 $('.ez-item,.ez-analysis-item,.ez-answer-item,.ez-answer-item,.ez-review-item').removeClass('ez-selected');
                 $(this).addClass('ez-selected');
+                $(this).attr("contenteditable", true);
                 var val = "1";
                 if ($(this).hasClass('ez-item')) {
                     val = "1";
-                    $(this).attr("contenteditable",true);
                 } else if ($(this).hasClass('ez-analysis-item')) {
                     val = "2";
                 }
@@ -383,7 +386,8 @@
 
                     var dataset = {
                         subjects: subjectData[0].subjects,
-                        learnSegments: learnSegmentData[0].learnSegments
+                        learnSegments: learnSegmentData[0].learnSegments,
+                        docxName:localStorage["docxName"]
                     };
 
                     var templateText = $("#formT").text();

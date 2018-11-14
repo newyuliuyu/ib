@@ -39,7 +39,7 @@ public class TestPaperServiceImplTest {
         LearnSegment learnSegment = LearnSegment.builder().id(3).build();
         for (int i = 1; i <= 13; i++) {
             TestPaper testPaper = TestPaper.builder()
-                    .id((long)i)
+                    .id((long) i)
                     .name("测试试卷" + i)
                     .subject(subject)
                     .learnSegment(learnSegment)
@@ -95,16 +95,17 @@ public class TestPaperServiceImplTest {
 
     @Test
     public void queryTestPapers() throws Exception {
-        PageHelper.startPage(0, 5);
-        List<TestPaper> testPapers = testPaperService.queryTestPapers(0, 0, null);
+        PageHelper.startPage(1, 5);
+        List<TestPaper> testPapers = testPaperService.queryTestPapers(0, 0,
+                null, 0, 0,2);
         PageInfo<TestPaper> page = new PageInfo<>(testPapers);
 
-        System.out.println( page.getPageNum());
-        System.out.println( page.getPageSize());
-        System.out.println( page.getStartRow());
-        System.out.println( page.getEndRow());
-        System.out.println( page.getTotal());
-        System.out.println( page.getPages());
+        System.out.println(page.getPageNum());
+        System.out.println(page.getPageSize());
+        System.out.println(page.getStartRow());
+        System.out.println(page.getEndRow());
+        System.out.println(page.getTotal());
+        System.out.println(page.getPages());
 
 
         System.out.println();

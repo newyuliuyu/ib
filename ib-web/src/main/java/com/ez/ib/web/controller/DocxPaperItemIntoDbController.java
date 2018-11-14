@@ -3,10 +3,10 @@ package com.ez.ib.web.controller;
 import com.ez.common.mvc.ModelAndViewFactory;
 import com.ez.common.util.FileUtil;
 import com.ez.common.util.IdGenerator;
+import com.ez.ib.web.bean.EzConfig;
 import com.ez.ib.web.utils.DocxToHtml;
 import com.ez.ib.web.utils.HtmlItemProcessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,12 +31,15 @@ import java.nio.file.Paths;
 @RestController
 public class DocxPaperItemIntoDbController {
 
-    @Value("${upload.file.dir:''}")
-    private String uploadFileDir;
-    @Value("${save.docx.image.dir:''}")
-    private String saveDocxImageDir;
-    @Value("${html.image.root.path:''}")
-    private String htmlImageRootPath;
+//    @Value("${upload.file.dir:''}")
+//    private String uploadFileDir;
+//    @Value("${save.docx.image.dir:''}")
+//    private String saveDocxImageDir;
+//    @Value("${html.image.root.path:''}")
+//    private String htmlImageRootPath;
+
+    @Autowired
+    private EzConfig ezConfig;
 
     @Autowired
     private IdGenerator idGenerator;
@@ -50,15 +53,15 @@ public class DocxPaperItemIntoDbController {
 
         checkParam();
 
-        Path path = Paths.get(uploadFileDir, docxname);
+        Path path = Paths.get(ezConfig.getUploadFileDir(), docxname);
         FileInputStream in = new FileInputStream(path.toFile());
         String result = "";
         try {
             long id = idGenerator.nextId();
 
             String html = DocxToHtml.toHtml(in,
-                    FileUtil.getPath(saveDocxImageDir) + "/" + id,
-                    FileUtil.getPath(htmlImageRootPath) + "/" + id);
+                    FileUtil.getPath(ezConfig.getSaveDocxImageDir()) + "/" + id,
+                    FileUtil.getPath(ezConfig.getHtmlImageRootPath()) + "/" + id);
             HtmlItemProcessHandler htmlItemProcessHandler = new HtmlItemProcessHandler(html);
             result = htmlItemProcessHandler.process();
             System.out.println(result);
@@ -81,13 +84,13 @@ public class DocxPaperItemIntoDbController {
     }
 
     private void checkParam() {
-        if (StringUtils.isEmpty(uploadFileDir)) {
+        if (StringUtils.isEmpty(ezConfig.getUploadFileDir())) {
             throw new RuntimeException("word文件的根路径(uploadFileDir)为空");
         }
-        if (StringUtils.isEmpty(saveDocxImageDir)) {
+        if (StringUtils.isEmpty(ezConfig.getSaveDocxImageDir())) {
             throw new RuntimeException("保存word文件图片的根路径(saveDocxImageDir)为空");
         }
-        if (StringUtils.isEmpty(htmlImageRootPath)) {
+        if (StringUtils.isEmpty(ezConfig.getHtmlImageRootPath())) {
             throw new RuntimeException("html文件访问图片的根路径(htmlImageRootPath)为空");
         }
     }

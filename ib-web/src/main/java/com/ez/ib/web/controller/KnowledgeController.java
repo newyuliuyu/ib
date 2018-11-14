@@ -1,8 +1,8 @@
 package com.ez.ib.web.controller;
 
-import com.ez.common.json.Json2;
 import com.ez.common.mvc.ModelAndViewFactory;
 import com.ez.ib.web.bean.Knowledge;
+import com.ez.ib.web.bean.KnowledgeContentToId;
 import com.ez.ib.web.bean.KnowledgeSystem;
 import com.ez.ib.web.service.KnowledgeService;
 import lombok.extern.slf4j.Slf4j;
@@ -58,10 +58,9 @@ public class KnowledgeController {
                                                    HttpServletRequest req,
                                                    HttpServletResponse res) throws Exception {
         log.debug("searchKnowledgeWithContent controller...");
-        List<Knowledge> knowledges = knowledgeService.queryKnowledgesWithContent(contents);
+        List<KnowledgeContentToId> KnowledgeContentToIds = knowledgeService.queryKnowledgesWithContent(contents);
 
-        System.out.println(Json2.toJson(knowledges));
-        return ModelAndViewFactory.instance().with("knowledges", knowledges).build();
+        return ModelAndViewFactory.instance().with("knowledgeContentToIds", KnowledgeContentToIds).build();
     }
 
 }

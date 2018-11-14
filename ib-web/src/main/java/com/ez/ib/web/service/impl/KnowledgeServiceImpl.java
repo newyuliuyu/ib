@@ -1,12 +1,14 @@
 package com.ez.ib.web.service.impl;
 
 import com.ez.ib.web.bean.Knowledge;
+import com.ez.ib.web.bean.KnowledgeContentToId;
 import com.ez.ib.web.bean.KnowledgeSystem;
 import com.ez.ib.web.bean.TestPaper;
 import com.ez.ib.web.dao.KnowledgeDao;
 import com.ez.ib.web.dao.TestPaperDao;
 import com.ez.ib.web.service.KnowledgeService;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -57,24 +60,61 @@ public class KnowledgeServiceImpl implements KnowledgeService {
     }
 
     @Override
-    public List<Knowledge> queryKnowledgesWithContent(List<String> contents) {
+    public List<KnowledgeContentToId> queryKnowledgesWithContent(List<String> contents) {
         if (contents == null || contents.isEmpty()) {
             return Lists.newArrayList();
         }
 
-        List<Knowledge> knowledges = knowledgeDao.queryKnowledgesWithContent(contents);
+        List<String> uniqueContents = uniqueContents(contents);
+        List<Knowledge> knowledges = knowledgeDao.queryKnowledgesWithContent(uniqueContents);
         Map<String, Knowledge> knowledgeMap = knowledges.stream().collect(Collectors.toMap(key -> key.getContent(), value -> value));
-        List<Knowledge> result = Lists.newArrayList();
+
+        List<KnowledgeContentToId> result = Lists.newArrayList();
+
         contents.stream().forEach(c -> {
-            Knowledge knowledge = knowledgeMap.get(c);
-            Knowledge knowledge2 = null;
-            if (knowledge == null) {
-                knowledge2 = Knowledge.builder().id(0L).content(c).build();
-            } else {
-                knowledge2 = Knowledge.builder().id(knowledge.getId()).content(knowledge.getContent()).build();
+            String[] values = getKnowledgeContents(c);
+            StringBuilder contentValues = new StringBuilder();
+            StringBuilder contentIds = new StringBuilder();
+            boolean hasNotFind = false;
+            for (String v : values) {
+
+                Knowledge knowledge = knowledgeMap.get(v);
+                String id = "无";
+                if (knowledge != null) {
+                    id = knowledge.getId().toString();
+                } else {
+                    hasNotFind = true;
+                }
+                contentValues.append(v).append("|");
+                contentIds.append(id).append(",");
             }
-            result.add(knowledge2);
+            if (contentValues.length() > 0) {
+                contentValues = contentValues.deleteCharAt(contentValues.length() - 1);
+            }
+            if (contentIds.length() > 0) {
+                contentIds = contentIds.deleteCharAt(contentIds.length() - 1);
+            }
+            result.add(KnowledgeContentToId.builder()
+                    .contents(contentValues.toString())
+                    .hasNotFind(hasNotFind)
+                    .ids(contentIds.toString())
+                    .build());
         });
         return result;
+    }
+
+    private List<String> uniqueContents(List<String> contents) {
+        Set<String> result = Sets.newHashSet();
+        contents.stream().forEach(c -> {
+            String[] values = getKnowledgeContents(c);
+            for (String v : values) {
+                result.add(v);
+            }
+        });
+        return Lists.newArrayList(result);
+    }
+
+    private String[] getKnowledgeContents(String content) {
+        return content.split("\\|");
     }
 }

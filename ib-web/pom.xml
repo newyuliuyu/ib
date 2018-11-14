@@ -11,7 +11,7 @@
     <groupId>ib</groupId>
     <artifactId>ib-web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>ib-web</name>
     <description>Demo project for Spring Boot</description>
@@ -149,6 +149,84 @@
 
             </build>
         </profile>
+
+        <profile>
+            <id>wanrong</id>
+            <properties>
+                <env>wanrong</env>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                    <!--用来打包成war文件-->
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-starter-tomcat</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <!-- YUI Compressor Maven压缩插件 -->
+                        <groupId>net.alchim31.maven</groupId>
+                        <artifactId>yuicompressor-maven-plugin</artifactId>
+                        <version>1.5.1</version>
+                        <executions>
+                            <execution>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>compress</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <encoding>UTF-8</encoding>
+                            <jswarn>true</jswarn>
+                            <force>false</force>
+                            <nosuffix>true</nosuffix>
+                            <linebreakpos>-1</linebreakpos>
+                            <sourceDirectory>target/classes</sourceDirectory>
+                            <!--<sourceDirectory>src/main/resources/static/</sourceDirectory>-->
+                            <outputDirectory>target/myjs/</outputDirectory>
+                            <excludes>
+                                <exclude>**/*.min*.js</exclude>
+                                <exclude>**/popper*.js</exclude>
+                                <exclude>**/vue.js</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.8</version>
+                        <executions>
+                            <execution>
+                                <id>prepare-package</id>
+                                <phase>prepare-package</phase>
+                                <configuration>
+                                    <target>
+                                        <echo message="********************copy app.js *************************"/>
+                                        <copy todir="target/classes" overwrite="true">
+                                            <fileset dir="target/myjs">
+                                                <include name="**/*.js"/>
+                                            </fileset>
+                                        </copy>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
     </profiles>
 
 </project>
