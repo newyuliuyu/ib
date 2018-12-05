@@ -1,6 +1,7 @@
 package com.ez.ib.web.bean;
 
 import lombok.*;
+import org.springframework.util.StringUtils;
 
 /**
  * ClassName: EzConfig <br/>
@@ -21,4 +22,13 @@ public class EzConfig {
     private String uploadFileDir;
     private String saveDocxImageDir;
     private String htmlImageRootPath;
+    private String internalHtmlImageRootPath;
+
+    public String realHtmlImageRootPath(int addressType) {
+        if (addressType == 1 && !StringUtils.isEmpty(internalHtmlImageRootPath)) {
+            return internalHtmlImageRootPath;
+        } else {
+            return htmlImageRootPath;
+        }
+    }
 }

@@ -49,8 +49,10 @@ public class SearchItemController {
         if (pageSize == 0) {
             pageSize = 10;
         }
+        int addressType = HttpReqUtils.getParamInt(request, "addressType");
+        
         PageHelper.startPage(pageNum, pageSize);
-        List<Item> items = itemService.queryItemWithKnowlege(knowledgeIds);
+        List<Item> items = itemService.queryItemWithKnowlege(knowledgeIds, addressType);
         return ModelAndViewFactory.instance().with("items", items).build();
     }
 

@@ -67,7 +67,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> queryItemWithKnowlege(List<Long> knowledgeIds) {
+    public List<Item> queryItemWithKnowlege(List<Long> knowledgeIds, int addressType) {
         Assert.isTrue(knowledgeIds != null && !knowledgeIds.isEmpty(), "知识点ID不能为null");
         List<Long> itemIds = itemDao.queryItemIdWithKnowledge(knowledgeIds);
         List<Item> items = Lists.newArrayList();
@@ -76,7 +76,7 @@ public class ItemServiceImpl implements ItemService {
             setItemAttr(items);
         }
 
-        ItemUtils.solveHTMLRootPath(items, ezConfig.getHtmlImageRootPath());
+        ItemUtils.solveHTMLRootPath(items, ezConfig.realHtmlImageRootPath(addressType));
         return items;
     }
 

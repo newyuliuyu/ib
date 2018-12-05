@@ -34,13 +34,13 @@ public class ItemServiceImplTest {
     @Test
     public void queryItemWithTestPaper() throws Exception {
         long testPaperId = 1054602800262205440L;
-        List<Item> items =  itemService.queryItemWithTestPaper(testPaperId);
+        List<Item> items = itemService.queryItemWithTestPaper(testPaperId);
         System.out.println();
     }
 
     @Test
-    public void queryItemWithKnowlege() throws Exception{
-        List<Item> items =  itemService.queryItemWithKnowlege(Lists.newArrayList(7L,16L,3L));
+    public void queryItemWithKnowlege() throws Exception {
+        List<Item> items = itemService.queryItemWithKnowlege(Lists.newArrayList(7L, 16L, 3L), 0);
         System.out.println();
     }
 
