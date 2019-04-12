@@ -92,7 +92,9 @@
                 src="../resources/images/ez/logo.png" alt="logo"></a>
         <ul class="easy_nav fl">
             <li><a class="" href="javascript:;"><span>【从docx文件导入题目】</span></a></li>
+            <span id="fileName"></span>
         </ul>
+
     </div>
 </div>
 
@@ -111,6 +113,7 @@
             <!--</div>-->
             <div id="mm" class="tabTit" name="tabTit"
                  style="height: 50px;border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
+
                 <button id="uploadDocxPaper" type="button" class="btn float-right btn-primary">导入Docx文档格式试卷</button>
             </div>
 
@@ -134,6 +137,7 @@
                     <button id="highlightShowItem" type="button" class="btn btn-outline-success">高亮显示题目</button>
                     <button id="tmpSave" type="button" class="btn btn-outline-success">临时保存</button>
                     <button id="save" type="button" class="btn btn-outline-success">保存</button>
+                    <button id="backtoTop" type="button" class="btn btn-outline-success">返回到顶端</button>
                 </div>
 
 
@@ -220,7 +224,7 @@
         <div class="col-sm-10">
             <select id="subject" class="form-control" style="width: 200px;">
                 {{~it.subjects:item:index}}
-                <option value="{{=item.id}}">{{=item.name}}</option>
+                <option value="{{=item.id}}" {{=(item.name==='数学')?"selected":""}}>{{=item.name}}</option>
                 {{~}}
             </select>
         </div>
@@ -230,7 +234,7 @@
         <div class="col-sm-10">
             <select id="learnSegment" class="form-control" style="width: 200px;">
                 {{~it.learnSegments:item:index}}
-                <option value="{{=item.id}}">{{=item.name}}</option>
+                <option value="{{=item.id}}" {{=(item.name==='高中')?"selected":""}}>{{=item.name}}</option>
                 {{~}}
             </select>
         </div>

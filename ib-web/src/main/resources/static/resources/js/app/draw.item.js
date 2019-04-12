@@ -128,6 +128,7 @@
         function UIshowItem() {
             if (localStorage['ezitemhtml']) {
                 $('.tabContent_body').html(localStorage['ezitemhtml']);
+                $('#fileName').text(localStorage["docxName"]);
             }
         }
 
@@ -469,6 +470,10 @@
                 highlightShowItem();
                 tmpSave();
                 save();
+                $('#backtoTop').click(function () {
+                    $(document).scrollTop(0);
+                })
+
             }
         }
     });

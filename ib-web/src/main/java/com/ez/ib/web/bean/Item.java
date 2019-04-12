@@ -2,6 +2,8 @@ package com.ez.ib.web.bean;
 
 import lombok.*;
 
+import java.util.Date;
+
 /**
  * ClassName: Item <br/>
  * Function:  ADD FUNCTION. <br/>
@@ -26,6 +28,7 @@ public class Item {
     private Subject subject;
     private LearnSegment learnSegment;
     private ItemKnowledge itemKnowledge;
+    private long timestamp = 0L;
 
     public ItemKnowledge getItemKnowledge() {
         if (itemKnowledge == null) {
@@ -48,5 +51,13 @@ public class Item {
         if (comment != null) {
             comment.setId(id);
         }
+    }
+
+    public void setCreateDate(Date date) {
+        this.timestamp = date.getTime();
+    }
+
+    public Date getCreateDate() {
+        return new Date(timestamp);
     }
 }

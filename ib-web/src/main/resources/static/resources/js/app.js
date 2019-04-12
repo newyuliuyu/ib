@@ -90,7 +90,9 @@ var config = {
         'pager': 'js/lib/jquery.pager',
         'ztree': 'js/lib/jquery.ztree.all',
         'datetimepicker': 'js/lib/bootstrap-datetimepicker',
-        'copyutils': 'js/lib/clipboard.min'
+        'copyutils': 'js/lib/clipboard.min',
+        'TableFreeze': 'js/lib/TableFreeze',
+        'migrate': 'js/lib/jquery-migrate-1.2.1'
 
     },
     map: {
@@ -113,13 +115,16 @@ var config = {
             deps: ['jquery', 'css!style/icheck-blue']
         },
         'pager': {
-            deps: ['jquery','css!style/page']
+            deps: ['jquery', 'css!style/page']
         },
         'ztree': {
-            deps: ['jquery','css!style/zTreeStyle']
+            deps: ['jquery', 'css!style/zTreeStyle']
         },
         'datetimepicker': {
-            deps: ['bootstrap','css!style/bootstrap-datetimepicker']
+            deps: ['bootstrap', 'css!style/bootstrap-datetimepicker']
+        },
+        'TableFreeze': {
+            deps: ['jquery', 'migrate']
         }
     }
 };

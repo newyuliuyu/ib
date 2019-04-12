@@ -1,6 +1,7 @@
 package fr.opensagres.poi.xwpf.converter.xhtml.internal;
 
 
+import com.ez.common.util.IdGenerator;
 import fr.opensagres.poi.xwpf.converter.core.*;
 import fr.opensagres.poi.xwpf.converter.core.styles.XWPFStylesDocument;
 import fr.opensagres.poi.xwpf.converter.core.styles.run.RunFontStyleStrikeValueProvider;
@@ -178,6 +179,22 @@ public class XHTMLMapper
         endElement(P_ELEMENT);
     }
 
+
+    private void filterCssStyle(CSSStyle cssStyle) {
+        if (cssStyle != null) {
+            Iterator<CSSProperty> it = cssStyle.getProperties().iterator();
+            while (it.hasNext()) {
+                CSSProperty cssProperty = it.next();
+                if (cssProperty.getName().equalsIgnoreCase("font-size")
+                        || cssProperty.getName().equalsIgnoreCase("font-family")
+                        || cssProperty.getName().equalsIgnoreCase("font-weight")
+                        || cssProperty.getName().equalsIgnoreCase("font-style")) {
+                    it.remove();
+                }
+            }
+        }
+    }
+
     @Override
     protected void visitRun(XWPFRun run, boolean pageNumber, String url, Object paragraphContainer)
             throws Exception {
@@ -194,18 +211,22 @@ public class XHTMLMapper
         // 1.2) Create "style" attributes.
         CTRPr rPr = run.getCTR().getRPr();
         CSSStyle cssStyle = getStylesDocument().createCSSStyle(rPr);
-        if (cssStyle != null) {
-            Iterator<CSSProperty> it = cssStyle.getProperties().iterator();
-            while (it.hasNext()){
-                CSSProperty cssProperty = it.next();
-                if(cssProperty.getName().equalsIgnoreCase("font-size")
-                || cssProperty.getName().equalsIgnoreCase("font-family")){
-                    it.remove();
-                }
-            }
-
-//            cssStyle.addProperty(CSSStylePropertyConstants.WHITE_SPACE, "pre-wrap");
-        }
+        System.out.println("XHTMLMApper.visitRun===========过滤css 样式");
+        filterCssStyle(cssStyle);
+//        if (cssStyle != null) {
+////            Iterator<CSSProperty> it = cssStyle.getProperties().iterator();
+////            while (it.hasNext()) {
+////                CSSProperty cssProperty = it.next();
+////                if (cssProperty.getName().equalsIgnoreCase("font-size")
+////                        || cssProperty.getName().equalsIgnoreCase("font-family")
+////                        || cssProperty.getName().equalsIgnoreCase("font-weight")
+////                        || cssProperty.getName().equalsIgnoreCase("font-style")) {
+////                    it.remove();
+////                }
+////            }
+//
+////            cssStyle.addProperty(CSSStylePropertyConstants.WHITE_SPACE, "pre-wrap");
+//        }
         this.currentRunAttributes = createStyleAttribute(cssStyle, currentRunAttributes);
 
         if (url != null) {
@@ -273,6 +294,8 @@ public class XHTMLMapper
 
         // 1.2) Create "style" attributes.
         CSSStyle cssStyle = getStylesDocument().createCSSStyle(rPr);
+        System.out.println("XHTMLMApper.visitStyleText===========过滤css 样式");
+        filterCssStyle(cssStyle);
         if (cssStyle != null) {
             Color color = RunTextHighlightingValueProvider.INSTANCE.getValue(rPr, getStylesDocument());
             if (color != null)
@@ -417,9 +440,9 @@ public class XHTMLMapper
             TableCellBorder border = getStylesDocument().getTableBorder(table, BorderSide.TOP);
             if (border != null) {
                 //修改过
-                float borderSize=0;
-                if(border.hasBorder() && border.getBorderSize()<=0){
-                    borderSize=1;
+                float borderSize = 0;
+                if (border.hasBorder() && border.getBorderSize() <= 0) {
+                    borderSize = 1;
                 }
                 String style = borderSize + "px solid " + StringUtils.toHexString(border.getBorderColor());
                 cssStyle.addProperty(CSSStylePropertyConstants.BORDER_TOP, style);
@@ -428,9 +451,9 @@ public class XHTMLMapper
             border = getStylesDocument().getTableBorder(table, BorderSide.BOTTOM);
             if (border != null) {
                 //修改过
-                float borderSize=0;
-                if(border.hasBorder() && border.getBorderSize()<=0){
-                    borderSize=1;
+                float borderSize = 0;
+                if (border.hasBorder() && border.getBorderSize() <= 0) {
+                    borderSize = 1;
                 }
                 String style = borderSize + "px solid " + StringUtils.toHexString(border.getBorderColor());
                 cssStyle.addProperty(CSSStylePropertyConstants.BORDER_BOTTOM, style);
@@ -438,9 +461,9 @@ public class XHTMLMapper
 
             border = getStylesDocument().getTableBorder(table, BorderSide.LEFT);
             if (border != null) {
-                float borderSize=0;
-                if(border.hasBorder() && border.getBorderSize()<=0){
-                    borderSize=1;
+                float borderSize = 0;
+                if (border.hasBorder() && border.getBorderSize() <= 0) {
+                    borderSize = 1;
                 }
                 String style = borderSize + "px solid " + StringUtils.toHexString(border.getBorderColor());
                 cssStyle.addProperty(CSSStylePropertyConstants.BORDER_LEFT, style);
@@ -448,9 +471,9 @@ public class XHTMLMapper
 
             border = getStylesDocument().getTableBorder(table, BorderSide.RIGHT);
             if (border != null) {
-                float borderSize=0;
-                if(border.hasBorder() && border.getBorderSize()<=0){
-                    borderSize=1;
+                float borderSize = 0;
+                if (border.hasBorder() && border.getBorderSize() <= 0) {
+                    borderSize = 1;
                 }
                 String style = borderSize + "px solid " + StringUtils.toHexString(border.getBorderColor());
                 cssStyle.addProperty(CSSStylePropertyConstants.BORDER_RIGHT, style);
@@ -494,11 +517,13 @@ public class XHTMLMapper
 
     }
 
+    private IdGenerator idGenerator = new IdGenerator();
+
     @Override
     protected void visitRunCTOMathImpl(XWPFParagraph paragraph, CTOMathImpl ctoMath, Object paragraphContainer) throws Exception {
         //添加对数学公式的解析
         AttributesImpl attributes = null;
-        String mathFileName = "test.png";
+        String mathFileName = idGenerator.nextId() + "test.png";
 
 
         WordToMathParse parse = new WordToMathParse(ctoMath);
@@ -513,6 +538,12 @@ public class XHTMLMapper
             startElement(IMG_ELEMENT, attributes);
             endElement(IMG_ELEMENT);
         }
+
+//        startElement(SPAN_ELEMENT, null);
+//        String latext = parse.getLatext();
+//        characters("<a href=''>$" + latext + "$["+latext+"]</a>");
+//        endElement(SPAN_ELEMENT);
+
         System.out.println();
     }
 

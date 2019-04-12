@@ -27,11 +27,12 @@ public class DocxToHtmlTest {
 
     @Test
     public void testDocxToHtml() throws Exception {
-        Path docxfilepath = Paths.get("/home/liuyu/tmp/word2html/wordfile/35.docx");
+        Path docxfilepath = Paths.get("/home/liuyu/tmp/word2html/wordfile/a6.docx");
         Path htmlfilepath = Paths.get("/home/liuyu/tmp/word2html/my.html");
 
         String saveDocxImageDir = "/home/liuyu/tmp/word2html/docimage";
         String htmlImageRootPath = "/home/liuyu/tmp/word2html/docimage";
+//        String htmlImageRootPath = "file:///E:/liuyu/tmp/word2html/docimage";
 
         File docxfile = docxfilepath.toFile();
         File htmlfile = htmlfilepath.toFile();
@@ -42,7 +43,7 @@ public class DocxToHtmlTest {
     }
     @Test
     public void testDocxToHtmlString() throws Exception {
-        Path docxfilepath = Paths.get("/home/liuyu/tmp/word2html/wordfile/33.docx");
+        Path docxfilepath = Paths.get("/home/liuyu/tmp/word2html/wordfile/a6.docx");
 //        Path htmlfilepath = Paths.get("/home/liuyu/tmp/word2html/my.html");
 
         String saveDocxImageDir = "/home/liuyu/tmp/docimage";

@@ -57,12 +57,14 @@ public class TestPaperController {
 
     private void setTestPaperItemAllId(TestPaperItem testPaperItem) {
         long id = idGenerator.nextId();
+        long timestamp = System.currentTimeMillis();
         TestPaper testPaper = testPaperItem.getTestPaper();
         testPaper.setId(id);
         for (Item item : testPaperItem.getItems()) {
             item.setSubject(testPaper.getSubject());
             item.setLearnSegment(testPaper.getLearnSegment());
             item.setAllId(id);
+            item.setTimestamp(timestamp);
             id = idGenerator.nextId();
         }
     }

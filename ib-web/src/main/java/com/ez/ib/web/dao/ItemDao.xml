@@ -3,10 +3,10 @@
 <mapper namespace="com.ez.ib.web.dao.ItemDao">
 
     <insert id="saveItems">
-        INSERT INTO ib_item(id,stem,analysisId,answerId,commentId,subjectId,learnSegmentId)
+        INSERT INTO ib_item(id,stem,analysisId,answerId,commentId,subjectId,learnSegmentId,timestamp)
         VALUES
         <foreach collection="items" item="item" index="index" separator=",">
-            (#{item.id},#{item.itemStem.id},#{item.analysis.id},#{item.answer.id},#{item.comment.id},#{item.subject.id},#{item.learnSegment.id})
+            (#{item.id},#{item.itemStem.id},#{item.analysis.id},#{item.answer.id},#{item.comment.id},#{item.subject.id},#{item.learnSegment.id},#{item.timestamp})
         </foreach>
     </insert>
 
@@ -78,6 +78,7 @@
 
     <resultMap id="myItem" type="com.ez.ib.web.bean.Item">
         <id property="id" column="id"/>
+        <result property="timestamp" column="timestamp"/>
         <association property="itemStem" javaType="com.ez.ib.web.bean.ItemStem">
             <id property="id" column="itemStemId"/>
             <result property="content" column="stemContent"/>
@@ -107,6 +108,7 @@
     <select id="queryItemWithTestPaper" resultMap="myItem">
         SELECT
         a.id,
+        a.timestamp,
         a.stem as itemStemId,
         a.analysisId as analysisId,
         a.answerId as answerId,
@@ -121,6 +123,7 @@
     <select id="getItem" resultMap="myItem">
         SELECT
         a.id,
+        a.timestamp,
         a.stem as itemStemId,
         a.analysisId as analysisId,
         a.answerId as answerId,
@@ -246,15 +249,18 @@
         SELECT
         distinct itemId
         FROM ib_item_x_knoledge a
+        inner join ib_item b on a.itemId=b.id
         WHERE a.knowledgeId in
         <foreach collection="ids" item="item" index="index" separator="," open="(" close=")">
             #{item}
         </foreach>
+        order by b.timestamp desc
     </select>
 
     <select id="queryItemWithIds" resultMap="myItem">
         SELECT
         a.id,
+        a.timestamp,
         a.stem as itemStemId,
         a.analysisId as analysisId,
         a.answerId as answerId,

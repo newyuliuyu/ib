@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html xmlns=http://www.w3.org/1999/xhtml>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" sizes="32x32" href="resources/images/favicon.png">
+    <title></title>
+
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!--[if lte IE 8]>
+    <noscript>
+        <style>.html5-wrappers {
+            display: none !important;
+        }</style>
+        <div class="ie-noscript-warning">您的浏览器禁用了脚本，请<a href="">查看这里</a>来启用脚本!或者<a href="/?noscript=1">继续访问</a>.
+        </div>
+    </noscript>
+    <![endif]-->
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var pathName = document.location.pathname;
+        var index = pathName.substr(1).indexOf("/");
+        var myContextPath = pathName.substr(0, index + 1);
+        window["app"] = {rootPath: myContextPath + '/', entry: 'table1'};
+
+        var script = document.createElement("script");
+        script.setAttribute("type", "text/javascript");
+        script.setAttribute("data-main", app.rootPath + "resources/js/app");
+        script.setAttribute("src", app.rootPath + "resources/js/lib/require.js");
+        var heads = document.getElementsByTagName("head");
+        document.documentElement.appendChild(script);
+    </script>
+
+    <style type='text/css'>
+        table {
+            empty-cells: show;
+            border-collapse: collapse;
+            border-spacing: 0
+        }
+
+        table {
+            font-family: 宋体;
+            font-size: 10pt;
+            border: 1px green solid;
+            background-color: white;
+        }
+
+        table td {
+            height: 20px;
+            text-align: center;
+            border: 1px green solid;
+        }
+
+        table .tabTh {
+            color: green;
+            font-weight: bold;
+            background-color: #f1faee;
+        }
+    </style>
+</head>
+
+<body>
+
+<!--**************************************-->
+<h3>例0:原始表格上加滚动条效果;</h3>
+<div style="overflow:auto;width:300px;height:229px;">
+    <table id="tab_Test0" border="1" width='900'>
+        <tr class='tabTh'>
+            <td width="100px">序号</td>
+            <td width="100px">用户名</td>
+            <td width="100px">姓名</td>
+            <td width="100px">归属机构</td>
+            <td width="100px">密码</td>
+            <td width="100px">用户类型</td>
+            <td width="200px">状 态(0无效/1有效)</td>
+            <td width="100px">备注</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>1</td>
+            <td>admin</td>
+            <td>admin</td>
+            <td>9</td>
+            <td>******</td>
+            <td>系统管理员</td>
+            <td>1</td>
+            <td>it管理员</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>2</td>
+            <td>admin2</td>
+            <td>admin2</td>
+            <td>92</td>
+            <td>******</td>
+            <td>系统管理员2</td>
+            <td>1</td>
+            <td>it管理员2</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>3</td>
+            <td>admin3</td>
+            <td>admin3</td>
+            <td>93</td>
+            <td>******</td>
+            <td>系统管理员3</td>
+            <td>1</td>
+            <td>it管理员3</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>4</td>
+            <td>admin4</td>
+            <td>admin4</td>
+            <td>9</td>
+            <td>******</td>
+            <td>系统管理员4</td>
+            <td>14</td>
+            <td>it管理员4</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>5</td>
+            <td>admin5</td>
+            <td>admin5</td>
+            <td>95</td>
+            <td>******</td>
+            <td>系统管理员</td>
+            <td>1</td>
+            <td>it管理员</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>6</td>
+            <td>admin6</td>
+            <td>admin6</td>
+            <td>9</td>
+            <td>******</td>
+            <td>系统管理员6</td>
+            <td>1</td>
+            <td>it管理员6</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>7</td>
+            <td>admin7</td>
+            <td>admin7</td>
+            <td>7</td>
+            <td>******</td>
+            <td>系统管理员7</td>
+            <td>1</td>
+            <td>it管理员7</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>8</td>
+            <td>admin8</td>
+            <td>admin8</td>
+            <td>9</td>
+            <td>******</td>
+            <td>系统管理员8</td>
+            <td>1</td>
+            <td>it管理员8</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>9</td>
+            <td>admin9</td>
+            <td>admin9</td>
+            <td>9</td>
+            <td>******</td>
+            <td>系统管理员</td>
+            <td>1</td>
+            <td>it管理员</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>10</td>
+            <td>admin10</td>
+            <td>admin</td>
+            <td>9</td>
+            <td>******</td>
+            <td>系统管理员10</td>
+            <td>1</td>
+            <td>it管理员</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>11</td>
+            <td>admin11</td>
+            <td>admin11</td>
+            <td>9</td>
+            <td>******</td>
+            <td>系统管理员11</td>
+            <td>1</td>
+            <td>it管理员11</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>12</td>
+            <td>admin12</td>
+            <td>admin12</td>
+            <td>9</td>
+            <td>******</td>
+            <td>系统管理员12</td>
+            <td>1</td>
+            <td>it管理员</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>13</td>
+            <td>admin</td>
+            <td>admin</td>
+            <td>9</td>
+            <td>******</td>
+            <td>系统管理员</td>
+            <td>1</td>
+            <td>it管理员</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>14</td>
+            <td>admin4</td>
+            <td>admin4</td>
+            <td>9</td>
+            <td>******</td>
+            <td>系统管理员4</td>
+            <td>1</td>
+            <td>it管理员</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>15</td>
+            <td>admin</td>
+            <td>admin</td>
+            <td>9</td>
+            <td>******</td>
+            <td>系统管理员5</td>
+            <td>1</td>
+            <td>it管理员5</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>16</td>
+            <td>admin</td>
+            <td>admin6</td>
+            <td>9</td>
+            <td>******</td>
+            <td>系统管理6</td>
+            <td>1</td>
+            <td>it管理员6</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>17</td>
+            <td>admin</td>
+            <td>admin</td>
+            <td>9</td>
+            <td>******</td>
+            <td>系统管理员</td>
+            <td>1</td>
+            <td>it管理员</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>18</td>
+            <td>admin</td>
+            <td>admin</td>
+            <td>9</td>
+            <td>******</td>
+            <td>系统管理员</td>
+            <td>1</td>
+            <td>it管理员</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>19</td>
+            <td>admin19</td>
+            <td>admin19</td>
+            <td>9</td>
+            <td>******</td>
+            <td>系统管理员</td>
+            <td>1</td>
+            <td>it管理员</td>
+        </tr>
+        <tr align='center'>
+            <td><input type=checkbox>20</td>
+            <td>admin20</td>
+            <td>admin20</td>
+            <td>9</td>
+            <td>******</td>
+            <td>系统管理员</td>
+            <td>1</td>
+            <td>it管理员</td>
+        </tr>
+    </table>
+</div>
+<hr>
+
+
+<div style="overflow:auto;width:500px;height:229px;"><!-- 采用样式row 分成一层  一层   -->
+    <table id="genetable" class="table table-border table-bordered table-bg table-hover table-sort table-striped"
+           style="background-color:white;">
+        <thead>
+        <tr class="text-c">
+            <td>全选</td>
+            <td>疾病名称</td>
+            <td>基因名称<br/>【gene】</td>
+            <td>位置信息<br/>【location】</td>
+            <td>SNP<br/>【rs#】</td>
+            <td>突变区域<br/>【position】</td>
+            <td>突变信息<br/>【(ref /mut)allele】</td>
+            <td>影响氨基酸改变<br/>【influence】</td>
+            <td>风险等位基因信息<br/>【Risk allele】</td>
+            <td>最小等位基因频率<br/>【allele frequency】</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+
+</html>

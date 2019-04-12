@@ -39,8 +39,8 @@
             if ($.isPlainObject(page)) {
                 url += '&pageNum=' + page.pageNum + "&pageSize=" + page.pageSize;
             }
-            var showRelationKnowledgeState=$('#showRelationKnowledgeState').val();
-            if(showRelationKnowledgeState !=="0"){
+            var showRelationKnowledgeState = $('#showRelationKnowledgeState').val();
+            if (showRelationKnowledgeState !== "0") {
                 url += '&showRelationKnowledgeState=' + showRelationKnowledgeState;
             }
 
@@ -101,7 +101,6 @@
             })
 
         }
-
 
 
         function updateTestPaperKnowledgeSystem($a, testPaper) {
@@ -183,9 +182,14 @@
             });
         }
 
-        function clickCurPage(){
-            $('#pager').clickCurPage();
+        function clickCurPage() {
+            if ($('#pager>.pages').size() === 0) {
+                searchTestPaper();
+            } else {
+                $('#pager').clickCurPage();
+            }
         }
+
         function deleteTestPaper(testpaperId) {
             var url = '/testpaper/del';
             console.log(testpaperId)
@@ -196,7 +200,6 @@
                 $('body').close(arguments[0]);
             });
         }
-
 
 
         return {

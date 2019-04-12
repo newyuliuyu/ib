@@ -20,7 +20,9 @@ import org.openxmlformats.schemas.drawingml.x2006.main.CTGraphicalObject;
 import org.openxmlformats.schemas.drawingml.x2006.main.CTGraphicalObjectData;
 import org.openxmlformats.schemas.drawingml.x2006.picture.CTPicture;
 import org.openxmlformats.schemas.drawingml.x2006.wordprocessingDrawing.*;
+import org.openxmlformats.schemas.officeDocument.x2006.math.CTOMath;
 import org.openxmlformats.schemas.officeDocument.x2006.math.impl.CTOMathImpl;
+import org.openxmlformats.schemas.officeDocument.x2006.math.impl.CTOMathParaImpl;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 import org.xml.sax.SAXException;
 
@@ -335,10 +337,33 @@ public abstract class XWPFDocumentVisitor<T, O extends Options, E extends IXWPFM
     protected void visitParagraphBody(XWPFParagraph paragraph, int index, T paragraphContainer)
             throws Exception {
         List<XWPFRun> runs = paragraph.getRuns();
+
+
         if (runs.isEmpty()) {
             // a new line must be generated if :
             // - there is next paragraph/table
             // - if the body is a cell (with none vMerge) and contains just this paragraph
+
+            CTP ctp = paragraph.getCTP();
+            XmlCursor c = ctp.newCursor();
+            c.selectPath("child::*");
+            while (c.toNextSelection()) {
+                XmlObject o = c.getObject();
+                System.out.println(o.toString());
+                System.out.println("*******visitParagraphBody*******************************************************************************");
+
+                if (o instanceof CTOMathParaImpl) {
+                    CTOMathParaImpl mathParaImpl = (CTOMathParaImpl) o;
+                    CTOMath[] ctoMaths = mathParaImpl.getOMathArray();
+                    for (CTOMath ctoMath : ctoMaths) {
+                        visitRunCTOMathImpl(paragraph, (CTOMathImpl) ctoMath, paragraphContainer);
+                    }
+                }
+                CTOMathParaImpl a = null;
+
+                System.out.println();
+            }
+
             if (isAddNewLine(paragraph, index)) {
                 visitEmptyRun(paragraphContainer);
             }
@@ -589,7 +614,7 @@ public abstract class XWPFDocumentVisitor<T, O extends Options, E extends IXWPFM
             } else if (o instanceof CTEmpty) {
                 String tagName = o.getDomNode().getNodeName();
                 if ("w:tab".equals(tagName)) {
-                    String tmp="          ";
+                    String tmp = "          ";
                     sb.append(tmp);
 //                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
                 }
@@ -614,7 +639,7 @@ public abstract class XWPFDocumentVisitor<T, O extends Options, E extends IXWPFM
         while (c.toNextSelection()) {
             XmlObject o = c.getObject();
             System.out.println(o.toString());
-            System.out.println("**************************************************************************************");
+            System.out.println("************visitRuns**************************************************************************");
 
             if (old != null && (!isCTTExt(o) || !compareCTTExtStyle(old, o))) {
                 System.out.println(textsb.toString());
