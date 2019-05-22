@@ -8,6 +8,7 @@ import org.jsoup.nodes.Entities;
 import org.jsoup.select.Elements;
 import org.junit.Test;
 
+import java.net.URLDecoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,6 +53,30 @@ public class JsoupTest {
         }
 
     }
+
+    @Test
+    public void testHTML() throws Exception {
+        String html = "<!DOCTYPE html>\n" +
+                "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <title>Title</title>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "<div id=\"aa\">" +
+                "</body>\n" +
+                "</html>";
+
+        Document doc = Jsoup.parse(html, "https://baidu.com/test/");
+        doc.outputSettings().escapeMode(Entities.EscapeMode.xhtml);
+        doc.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
+        doc.outputSettings().charset("UTF-8");
+
+
+        System.out.println(doc.html());
+
+    }
+
     @Test
     public void showTab() throws Exception {
         String html = "<!DOCTYPE html>\n" +
@@ -65,7 +90,7 @@ public class JsoupTest {
                 "</body>\n" +
                 "</html>";
 
-        html="<span>   jj    jj</span>";
+        html = "<span>   jj    jj</span>";
 
         Document doc = Jsoup.parse(html, "https://baidu.com/test/");
         doc.outputSettings().escapeMode(Entities.EscapeMode.xhtml);
@@ -120,7 +145,7 @@ public class JsoupTest {
     }
 
     @Test
-    public void processURLTest() throws Exception{
+    public void processURLTest() throws Exception {
         String html = "<p style=\"margin-left:15.6pt;white-space:pre-wrap;\">" +
                 "已知f（x）=alnx+" +
                 "<img src=\"http://192.168.1.145/paper/1060351921598185472/image5.png\" " +
@@ -132,13 +157,13 @@ public class JsoupTest {
                 "<img src=\"http://192.168.1.145/paper/1060351921598185472/image6.png\" " +
                 "style=\"width:75.0pt;height:34.5pt;\">＞2恒成立，则a的取值范围是（　　）</p>";
 
-        html = html.replaceAll("http://192.168.1.145/paper","\\${{rootPath}}");
+        html = html.replaceAll("http://192.168.1.145/paper", "\\${{rootPath}}");
         Document doc = Jsoup.parse(html);
 
-        Elements elements  = doc.select("img");
-        for(Element e:elements){
+        Elements elements = doc.select("img");
+        for (Element e : elements) {
             String src = e.attr("src");
-            e.attr("src","/1060351921598185472/image5.png");
+            e.attr("src", "/1060351921598185472/image5.png");
             System.out.println(src);
             System.out.println(e.outerHtml());
         }
@@ -312,5 +337,12 @@ public class JsoupTest {
                 wrap.after("<br/>");
             }
         }
+    }
+
+
+    @Test
+    public void test01() throws Exception{
+        String k = URLDecoder.decode("123fds   fsdfsdfs456","utf-8");
+        System.out.println(k);
     }
 }

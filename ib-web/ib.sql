@@ -127,5 +127,14 @@ CREATE TABLE ib_item_x_knoledge(
 -- 把试题增加一个录题时间
 alter table `ib_item` add timestamp bigint default 0 comment'录题时间';
 
+DROP TABLE IF EXISTS ib_video;
+CREATE TABLE ib_video(
+  id int not null AUTO_INCREMENT,
+  url varchar(255) not null comment'视频播放地址',
+  videoUrl varchar(255) not null comment'视频地址',
+  knowledge varchar(255) NOT NULL comment'知识点',
+  subject varchar(255) NOT NULL comment'科目',
+  PRIMARY KEY (id)
+)ENGINE=INNODB;
 
 

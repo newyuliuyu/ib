@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ez.ib.web.dao.VideoDao">
+
+
+    <select id="queryWithSubjectAndKnowledge" resultType="com.ez.ib.web.bean.Video">
+        select url,videoUrl,knowledge,subject from ib_video a
+        where a.subject=#{subject} and a.knowledge=#{knowledge} limit 1
+    </select>
+
+</mapper>
