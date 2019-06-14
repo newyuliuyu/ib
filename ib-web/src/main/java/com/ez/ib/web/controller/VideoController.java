@@ -66,6 +66,8 @@ public class VideoController {
                 videos.add(video);
             }
         }
+
+
         return ModelAndViewFactory.instance().with("videos", videos).build();
     }
 

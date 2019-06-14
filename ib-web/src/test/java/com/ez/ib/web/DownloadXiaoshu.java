@@ -1,5 +1,8 @@
 package com.ez.ib.web;
 
+import com.ez.common.httpclient.HCUtils;
+import com.ez.common.httpclient.HttpGetBuilder;
+import com.ez.common.httpclient.RequestResult;
 import com.google.common.collect.Lists;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -9,12 +12,7 @@ import org.jsoup.nodes.Entities;
 import org.jsoup.select.Elements;
 import org.junit.Test;
 
-import java.io.BufferedReader;
 import java.io.FileOutputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -37,11 +35,11 @@ public class DownloadXiaoshu {
     public void test01() throws Exception {
         List<Article> articles = getArticleAddress();
 
-        Path path = Paths.get("/home/liuyu/tmp/a3.txt");
+        Path path = Paths.get("/home/liuyu/tmp/a4.txt");
         FileOutputStream out = FileUtils.openOutputStream(path.toFile(), true);
         boolean isContinue=false;
         for (Article article : articles) {
-            if(article.title.equalsIgnoreCase("第八百四十五章 流放")){
+            if(article.title.equalsIgnoreCase("第八百七十一章 场上见真章")){
                 isContinue=true;
             }
 
@@ -117,25 +115,35 @@ public class DownloadXiaoshu {
     }
 
     public String readHTML(String urlpath) throws Exception {
-        URL url = new URL(urlpath);
-        URLConnection urlconn = url.openConnection(); // 试图连接并取得返回状态码
-        urlconn.connect();
-        HttpURLConnection httpconn = (HttpURLConnection) urlconn;
-        int filesize = urlconn.getContentLength(); // 取数据长度
-        InputStreamReader isReader = new InputStreamReader(urlconn.getInputStream(), "UTF-8");
-        BufferedReader reader = new BufferedReader(isReader);
-        StringBuffer buffer = new StringBuffer();
-        String line; // 用来保存每行读取的内容
-        line = reader.readLine(); // 读取第一行
-        while (line != null) { // 如果 line 为空说明读完了
-            buffer.append(line); // 将读到的内容添加到 buffer 中
-            buffer.append(" "); // 添加换行符
-            line = reader.readLine(); // 读取下一行
+        HttpGetBuilder get = HttpGetBuilder.create(urlpath);
+        HCUtils hcUtils = HCUtils.createDefault();
+        try {
+            RequestResult result = hcUtils.exec(get.build());
+            return result.getContent();
+        }finally {
+            hcUtils.close();
         }
-//        System.out.print(buffer.toString());
+//        URL url = new URL(urlpath);
+//        URLConnection urlconn = url.openConnection(); // 试图连接并取得返回状态码
+//        urlconn.connect();
+//        HttpURLConnection httpconn = (HttpURLConnection) urlconn;
+//        int filesize = urlconn.getContentLength(); // 取数据长度
+//        InputStreamReader isReader = new InputStreamReader(urlconn.getInputStream(), "GBK");
+//        BufferedReader reader = new BufferedReader(isReader);
+//        StringBuffer buffer = new StringBuffer();
+//        String line; // 用来保存每行读取的内容
+//        line = reader.readLine(); // 读取第一行
+//        while (line != null) { // 如果 line 为空说明读完了
+//            buffer.append(line); // 将读到的内容添加到 buffer 中
+//            buffer.append(" "); // 添加换行符
+//            line = reader.readLine(); // 读取下一行
+//        }
+////        System.out.print(buffer.toString());
+//
+//        ((HttpURLConnection) urlconn).disconnect();
+//
+//        System.out.println(buffer.toString());
+//        return buffer.toString();
 
-        ((HttpURLConnection) urlconn).disconnect();
-
-        return buffer.toString();
     }
 }
