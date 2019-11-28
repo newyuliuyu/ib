@@ -27,7 +27,7 @@ public class DocxToHtmlTest {
 
     @Test
     public void testDocxToHtml() throws Exception {
-        Path docxfilepath = Paths.get("/home/liuyu/tmp/word2html/wordfile/a6.docx");
+        Path docxfilepath = Paths.get("/home/liuyu/tmp/word2html/wordfile/1.docx");
         Path htmlfilepath = Paths.get("/home/liuyu/tmp/word2html/my.html");
 
         String saveDocxImageDir = "/home/liuyu/tmp/word2html/docimage";

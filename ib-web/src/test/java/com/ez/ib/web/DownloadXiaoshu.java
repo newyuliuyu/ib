@@ -35,11 +35,11 @@ public class DownloadXiaoshu {
     public void test01() throws Exception {
         List<Article> articles = getArticleAddress();
 
-        Path path = Paths.get("/home/liuyu/tmp/a4.txt");
+        Path path = Paths.get("/home/liuyu/tmp/a5.txt");
         FileOutputStream out = FileUtils.openOutputStream(path.toFile(), true);
         boolean isContinue=false;
         for (Article article : articles) {
-            if(article.title.equalsIgnoreCase("第八百七十一章 场上见真章")){
+            if(article.title.equalsIgnoreCase("第九百三十九章 关卡重重")){
                 isContinue=true;
             }
 

@@ -35,7 +35,7 @@
                     }
                 })
 
-                var url = '/knowledge/search/with-content';
+                var url = '/knowledge/search/with-content?ksid=' + $('#konwledgeSystem').val()+'&lsid='+$('#learnSegments').val();
                 console.log(dataset)
                 ajax.postJson(url, dataset).then(function (dataset1) {
                     console.log(dataset1)
@@ -84,9 +84,34 @@
             });
         }
 
+        function init() {
+            var url1 = '/knowledge/knowledgesystem/list';
+            var url2 = '/learnsegment/list';
+            $.when(ajax.getJson(url1), ajax.getJson(url2)).then(function (data1, data2) {
+                var knowledgeSystems = data1[0].knowledgeSystems;
+                var learnSegments = data2[0].learnSegments;
+
+                var options1 = [];
+                $.each(knowledgeSystems, function (idx, ks) {
+
+                    options1.push('<option value="' + ks.id + '">' + ks.name + '</option>')
+                });
+                $('#konwledgeSystem').html(options1.join(''));
+
+                var options2 = [];
+                $.each(learnSegments, function (idx, ks) {
+
+                    options2.push('<option value="' + ks.id + '">' + ks.name + '</option>')
+                });
+                $('#learnSegments').html(options2.join(''));
+
+            });
+        }
+
         return {
             render: function () {
                 $('body').show();
+                init();
                 searchKnowledgeEvent();
                 copyKnowledgeIdsEvent();
             }

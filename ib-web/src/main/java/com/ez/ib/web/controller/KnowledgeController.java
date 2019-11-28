@@ -58,7 +58,9 @@ public class KnowledgeController {
                                                    HttpServletRequest req,
                                                    HttpServletResponse res) throws Exception {
         log.debug("searchKnowledgeWithContent controller...");
-        List<KnowledgeContentToId> KnowledgeContentToIds = knowledgeService.queryKnowledgesWithContent(contents);
+        String ksid = req.getParameter("ksid");
+        String lsid = req.getParameter("lsid");
+        List<KnowledgeContentToId> KnowledgeContentToIds = knowledgeService.queryKnowledgesWithContent(ksid,lsid,contents);
 
         return ModelAndViewFactory.instance().with("knowledgeContentToIds", KnowledgeContentToIds).build();
     }

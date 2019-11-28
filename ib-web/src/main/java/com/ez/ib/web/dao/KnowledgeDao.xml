@@ -27,7 +27,9 @@
 
     <select id="queryKnowledgesWithContent" resultType="com.ez.ib.web.bean.Knowledge">
         select id,content,parentId,deep from ib_knowledge a
-        where a.content in
+        where a.knowledgeSystemId= #{ksid}
+        and a.learnSegment=${lsid}
+        and a.content in
         <foreach collection="contents" item="item" index="index" separator="," open="(" close=")">
             #{item}
         </foreach>

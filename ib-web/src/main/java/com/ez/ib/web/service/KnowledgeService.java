@@ -25,7 +25,9 @@ public interface KnowledgeService {
 
     List<Knowledge> queryKnowledgesWithTestPaperId(long testPaperId);
 
-    List<KnowledgeContentToId> queryKnowledgesWithContent(List<String> contents);
+    List<KnowledgeContentToId> queryKnowledgesWithContent(String ksid,
+                                                          String lsid,
+                                                          List<String> contents);
 
 
 }

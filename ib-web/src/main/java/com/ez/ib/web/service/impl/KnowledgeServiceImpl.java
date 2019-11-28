@@ -60,13 +60,15 @@ public class KnowledgeServiceImpl implements KnowledgeService {
     }
 
     @Override
-    public List<KnowledgeContentToId> queryKnowledgesWithContent(List<String> contents) {
+    public List<KnowledgeContentToId> queryKnowledgesWithContent(String ksid,
+                                                                 String lsid,
+                                                                 List<String> contents) {
         if (contents == null || contents.isEmpty()) {
             return Lists.newArrayList();
         }
 
         List<String> uniqueContents = uniqueContents(contents);
-        List<Knowledge> knowledges = knowledgeDao.queryKnowledgesWithContent(uniqueContents);
+        List<Knowledge> knowledges = knowledgeDao.queryKnowledgesWithContent(ksid,lsid,uniqueContents);
         Map<String, Knowledge> knowledgeMap = knowledges.stream().collect(Collectors.toMap(key -> key.getContent(), value -> value));
 
         List<KnowledgeContentToId> result = Lists.newArrayList();

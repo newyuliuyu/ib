@@ -52,7 +52,7 @@ public class KnowledgeServiceImplTest {
         contents.add("倒数几何意义的应用");
         contents.add("导数的综合应用");
 
-        List<KnowledgeContentToId> KnowledgeContentToIds = knowledgeService.queryKnowledgesWithContent(contents);
+        List<KnowledgeContentToId> KnowledgeContentToIds = knowledgeService.queryKnowledgesWithContent("","",contents);
 
 //        for(Knowledge knowledge : knowledges){
 //            String json = Json2.toJson(knowledge);
